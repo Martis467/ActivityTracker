@@ -1,0 +1,5 @@
+com\enumerations\ActivityType.class
+com\models\GoalActivityRelation.class
+com\models\Goal.class
+com\models\ActivityLog.class
+com\models\Activity.class

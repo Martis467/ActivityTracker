@@ -23,7 +23,6 @@ public class JFXUtilities {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-        return;
     }
 
     /**
@@ -35,11 +34,12 @@ public class JFXUtilities {
      * @return stage
      */
     public static Stage loadWindow(String xmlFileName, String title, boolean debug) throws IOException {
-        URL resource = JFXUtilities.class.getClassLoader().getResource(createPath(xmlFileName));
+        String path = createPath(xmlFileName);
+        URL resource = JFXUtilities.class.getClassLoader().getResource(path);
 
         // If debugging is on print out the path of the xml file
         if(debug)
-            System.out.println("Loading resource: " + resource);
+            System.out.println("Loading resource: " + path + System.lineSeparator() + "Loaded : " + (resource != null));
 
         FXMLLoader loader = new FXMLLoader(resource);
         Parent root = loader.load();
@@ -86,6 +86,6 @@ public class JFXUtilities {
      * @return
      */
     private static String createPath(String xmlFileName) {
-        return "resources/gui/" + xmlFileName + ".fxml";
+        return "gui/" + xmlFileName + ".fxml";
     }
 }
