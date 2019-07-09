@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="563.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.ActivityTabController">
+<AnchorPane fx:id="fxRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="563.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.tabs.activity.ActivityTabController">
    <children>
       <BorderPane layoutX="10.0" layoutY="10.0" prefHeight="563.0" prefWidth="837.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <right>
@@ -47,12 +47,12 @@
                         <Font size="16.0" />
                      </font>
                   </Text>
-                  <Text layoutX="25.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="By type">
+                  <Text fx:id="fxTypeTickBox" layoutX="25.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Text>
-                  <CheckBox alignment="CENTER_RIGHT" layoutX="136.0" layoutY="41.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="28.0" />
+                  <CheckBox fx:id="fxAlphabeticalTickBox" alignment="CENTER_RIGHT" layoutX="136.0" layoutY="41.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="28.0" />
                   <CheckBox alignment="CENTER_RIGHT" layoutX="136.0" layoutY="69.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="28.0" />
                   <Text layoutX="237.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Duration">
                      <font>
@@ -64,9 +64,9 @@
                         <Font size="16.0" />
                      </font>
                   </Text>
-                  <CheckBox alignment="CENTER_RIGHT" layoutX="306.0" layoutY="42.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="28.0" />
-                  <CheckBox alignment="CENTER_RIGHT" layoutX="306.0" layoutY="69.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="28.0" />
-                  <Button layoutX="731.0" layoutY="37.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="92.0" text="Add new activity" wrapText="true">
+                  <CheckBox fx:id="fxDurationTickBox" alignment="CENTER_RIGHT" layoutX="306.0" layoutY="42.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="28.0" />
+                  <CheckBox fx:id="fxAmountTickBox" alignment="CENTER_RIGHT" layoutX="306.0" layoutY="69.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="28.0" />
+                  <Button layoutX="731.0" layoutY="37.0" mnemonicParsing="false" onAction="#openAddNewActivity" prefHeight="52.0" prefWidth="92.0" text="Add new activity" wrapText="true">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -77,7 +77,7 @@
          <center>
             <AnchorPane prefHeight="310.0" prefWidth="629.0" BorderPane.alignment="CENTER">
                <children>
-                  <BarChart fx:id="fxBarChart" layoutX="14.0" layoutY="7.0" prefHeight="334.0" prefWidth="509.0">
+                  <BarChart fx:id="fxBarChart" layoutX="14.0" layoutY="7.0" prefHeight="415.0" prefWidth="604.0">
                      <xAxis>
                         <CategoryAxis side="BOTTOM" />
                      </xAxis>

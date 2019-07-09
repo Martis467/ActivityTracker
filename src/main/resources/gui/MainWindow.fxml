@@ -10,13 +10,17 @@
       <TabPane fx:id="fxRootPane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="837.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="116.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
             <Tab text="Activity View">
-                <content>
+                <content >
                     <fx:include fx:id="activityTab" source="tabs/activity/ActivityTab.fxml" />
                 </content>
             </Tab>
-            <Tab text="Statistics" />
+            <Tab text="Statistics">
+                <content>
+                    <fx:include fx:id="statisticsTab" source="tabs/statistics/StatisticsTab.fxml" />
+                </content>
+            </Tab>
          </tabs>
       </TabPane>
-      <TextArea layoutY="512.0" prefHeight="118.0" prefWidth="837.0" />
+      <TextArea fx:id="fxConsoleTextArea" layoutY="512.0" prefHeight="118.0" prefWidth="837.0" />
    </children>
 </AnchorPane>

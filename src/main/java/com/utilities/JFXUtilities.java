@@ -41,6 +41,9 @@ public class JFXUtilities {
         if(debug)
             System.out.println("Loading resource: " + path + System.lineSeparator() + "Loaded : " + (resource != null));
 
+        if (resource == null)
+            throw new IOException();
+
         FXMLLoader loader = new FXMLLoader(resource);
         Parent root = loader.load();
         Scene scene = new Scene(root);

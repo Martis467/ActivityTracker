@@ -11,4 +11,5 @@ public class Goal {
     public long finished;
     public ActivityType type;
     public float percentage;
+    public long hexColor;
 }

@@ -13,7 +13,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        stage = JFXUtilities.loadWindow("MainWindow", "ActivityTracker", true);
+        stage = JFXUtilities.loadWindow("MainWindow", "ActivityTracker", false);
         stage.show();
     }
 

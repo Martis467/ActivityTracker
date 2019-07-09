@@ -16,6 +16,7 @@ public class BaseJavaFXController {
 
     // Set to true to log exceptions
     protected boolean debug = false;
+    protected String dir = "";
 
     /**
      * Move to next stage
@@ -24,9 +25,9 @@ public class BaseJavaFXController {
      * @param close set true to close current stage, false to keep it open
      * @return next stage controller
      */
-    protected  <T> T moveToStage(String xmlFile, String title, boolean close){
+    protected <T> T moveToStage(String xmlFile, String title, boolean close){
         try {
-            Stage nextStage = JFXUtilities.loadWindow(xmlFile, title, debug);
+            Stage nextStage = JFXUtilities.loadWindow(dir + xmlFile, title, debug);
             FXMLLoader loader = (FXMLLoader)nextStage.getUserData();
             nextStage.show();
             return loader.<T>getController();

@@ -10,7 +10,8 @@ ExpectedDuration INTEGER NOT NULL,
 Weight INTEGER NOT NULL,
 Description		TEXT NOT NULL,
 Type			INTEGER NOT NULL,
-CreateAt		INTEGER NOT NULL
+CreateAt		INTEGER NOT NULL,
+HexColor    INTEGER NOT NULL
 );
 
 CREATE TABLE ActivityLog(
@@ -33,7 +34,8 @@ CreateAt		INTEGER NOT NULL,
 ExpectedFinish	INTEGER,
 Finished		INTEGER,
 Type			INTEGER,
-Percentage		REAL
+Percentage		REAL,
+HexColor    INTEGER NOT NULL
 );
 
 CREATE TABLE GoalActivities(

@@ -10,4 +10,5 @@ public class Activity {
     public String description;
     public ActivityType type;
     public long createdAt;
+    public long hexColor;
 }
