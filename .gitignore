@@ -2,6 +2,8 @@ out/
 .idea/workspace.xml
 .idea/usage.statistics.xml
 .idea/tasks.xml
+.idea/dataSources.local.xml
+.idea/workspace.xml
 # Compiled class file
 *.class
 
