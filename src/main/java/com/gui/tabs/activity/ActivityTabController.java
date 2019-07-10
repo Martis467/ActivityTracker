@@ -39,8 +39,4 @@ public class ActivityTabController extends BaseJavaFXController implements Initi
     public void openAddNewActivity(ActionEvent actionEvent) {
         moveToStage(ADD_NEW_ACTIVITY, "New Activity", false);
     }
-
-    public void test(){
-        System.out.println("works");
-    }
 }

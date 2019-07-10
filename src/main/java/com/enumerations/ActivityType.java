@@ -3,21 +3,28 @@ package com.enumerations;
 import java.util.Arrays;
 
 public enum ActivityType {
-    Workout(0),
-    Read(1),
-    Program(2),
-    Game(3),
-    PlayMusic(4),
-    Educate(5);
+    Workout(0, "Working out"),
+    Read(1, "Reading"),
+    Program(2, "Programming"),
+    Game(3, "Playing video games"),
+    Music(4, "Playing musical instrument"),
+    Educate(5, "Educating");
 
     private final int id;
+    private final String displayName;
 
-    ActivityType(int id){
+    ActivityType(int id, String displayName){
         this.id = id;
+        this.displayName = displayName;
     }
 
     public static ActivityType parseFromInt(int id){
         return Arrays.stream(values())
                 .filter(e -> e.id == id).findFirst().orElseThrow();
+    }
+
+    @Override
+    public String toString() {
+        return displayName;
     }
 }
