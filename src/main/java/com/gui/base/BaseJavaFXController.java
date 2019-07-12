@@ -1,4 +1,4 @@
-package com.base;
+package com.gui.base;
 
 import com.exception.UIException;
 import com.exception.UIExceptionType;

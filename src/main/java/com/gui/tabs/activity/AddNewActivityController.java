@@ -1,10 +1,11 @@
 package com.gui.tabs.activity;
 
-import com.base.BaseJavaFXController;
+import com.gui.base.BaseJavaFXController;
 import com.enumerations.ActivityType;
 import com.exception.UIException;
 import com.exception.UIExceptionType;
 import com.models.Activity;
+import com.repositories.ActivityRepository;
 import com.utilities.JFXUtilities;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,6 +32,7 @@ public class AddNewActivityController extends BaseJavaFXController implements In
     @FXML private TextArea fxDescriptionTextField;
 
     //endregion
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -81,8 +83,7 @@ public class AddNewActivityController extends BaseJavaFXController implements In
      * @return
      */
     private Activity parseModel() throws UIException{
-        Activity model = new Activity();
-
-        return model;
+        //Activity model = new Activity();
+        return null;
     }
 }

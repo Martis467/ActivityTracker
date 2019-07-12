@@ -1,6 +1,6 @@
 package com.gui.tabs.activity;
 
-import com.base.BaseJavaFXController;
+import com.gui.base.BaseJavaFXController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
