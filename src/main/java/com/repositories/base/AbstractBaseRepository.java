@@ -4,6 +4,7 @@ import jdk.jshell.spi.ExecutionControl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 abstract class AbstractBaseRepository {
@@ -19,6 +20,13 @@ abstract class AbstractBaseRepository {
      * @throws SQLException
      */
     abstract ResultSet executeSql(String sql) throws SQLException;
+
+    /**
+     * Execute sql query
+     * @param sql
+     * @throws SQLException
+     */
+    abstract void executeUpdateSql(String sql) throws SQLException;
 
     /**
      * Parse result set to an entity of type T
@@ -45,7 +53,15 @@ abstract class AbstractBaseRepository {
      * @throws ExecutionControl.NotImplementedException
      * @throws SQLException
      */
-    abstract <T> T insert(T entity) throws ExecutionControl.NotImplementedException, SQLException;
+    abstract <T> void insert(T entity) throws ExecutionControl.NotImplementedException, SQLException;
+
+    /**
+     * Constructs an insert statement from a given field dictionary
+     * @param fields
+     * @param table
+     * @return
+     */
+    abstract String constructInsertSql(HashMap<String, String> fields, String table);
 
     /**
      * Update an entity of type T in database
@@ -55,7 +71,15 @@ abstract class AbstractBaseRepository {
      * @throws ExecutionControl.NotImplementedException
      * @throws SQLException
      */
-    abstract <T> T update(T entity) throws ExecutionControl.NotImplementedException, SQLException;
+    abstract <T> void update(T entity) throws ExecutionControl.NotImplementedException, SQLException;
+
+    /**
+     * Constructs an update statement from a given dictionary
+     * @param fields
+     * @param table
+     * @return
+     */
+    abstract String constructUpdateSql(HashMap<String, String> fields, int id, String table);
 
     /**
      * Delete an entity of type T from the database

@@ -27,4 +27,6 @@ public enum ActivityType {
     public String toString() {
         return displayName;
     }
+
+    public int getId() {return id;}
 }

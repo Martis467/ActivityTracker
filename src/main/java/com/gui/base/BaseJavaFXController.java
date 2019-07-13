@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import com.utilities.JFXUtilities;
+import org.controlsfx.control.CheckComboBox;
 
 import java.io.IOException;
 import java.util.AbstractCollection;
@@ -113,6 +114,17 @@ public class BaseJavaFXController {
     protected <T> void fillComboBox(ComboBox<T> comboBox, Stream<T> stream) {
         ObservableList<T> items = FXCollections.observableArrayList(stream.collect(Collectors.toList()));
         comboBox.getItems().setAll(items);
+    }
+
+    /**
+     * Fill a check combo box with stream values
+     * @param checkComboBox check combo box to fill
+     * @param stream collection with values to fill
+     * @param <T> type of object to fill in the combo box
+     */
+    protected <T> void fillCheckComboBox(CheckComboBox<T> checkComboBox, Stream<T> stream) {
+        ObservableList<T> items = FXCollections.observableArrayList(stream.collect(Collectors.toList()));
+        checkComboBox.getItems().setAll(items);
     }
 
     /**
