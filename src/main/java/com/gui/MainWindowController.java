@@ -17,5 +17,6 @@ public class MainWindowController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        activityTabController.setConsole(fxConsoleTextArea);
     }
 }

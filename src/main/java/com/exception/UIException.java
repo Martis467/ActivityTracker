@@ -28,10 +28,11 @@ public class UIException extends Exception {
         super("");
         this.fieldName = fieldName;
         this.title = title;
+        this.type = type;
 
         switch (type){
             case Path: break;
-            case Database: break;
+            case Database: constructDatabaseException(); break;
             case NullElement: constructNullElementException(); break;
             case InvalidFields: constructInvalidFieldsException(); break;
             default: break;
@@ -50,6 +51,10 @@ public class UIException extends Exception {
      */
     public String getTitle(){return this.title;}
 
+    private void constructDatabaseException(){
+        this.errorMessage = type.toString() + " failed";
+    }
+
     private void constructNullElementException() {
         this.errorMessage = "Variable <" + this.fieldName + "> was null";
     }
@@ -57,4 +62,5 @@ public class UIException extends Exception {
     private void constructInvalidFieldsException() {
         this.errorMessage = fieldName + " is incorrect format or empty";
     }
+
 }

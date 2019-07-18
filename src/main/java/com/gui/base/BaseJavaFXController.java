@@ -5,7 +5,6 @@ import com.exception.UIExceptionType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -126,10 +125,4 @@ public class BaseJavaFXController {
         ObservableList<T> items = FXCollections.observableArrayList(stream.collect(Collectors.toList()));
         checkComboBox.getItems().setAll(items);
     }
-
-    /**
-     * Init current scene with given data
-     * @throws Exception
-     */
-    public void initData() throws Exception { throw new Exception("Not implemented");}
 }

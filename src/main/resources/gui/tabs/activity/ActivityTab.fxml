@@ -8,18 +8,16 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="fxRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="563.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.tabs.activity.ActivityTabController">
+<AnchorPane fx:id="fxRootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="563.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.tabs.activity.ActivityTabController">
    <children>
       <BorderPane layoutX="10.0" layoutY="10.0" prefHeight="563.0" prefWidth="837.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <right>
-            <VBox fx:id="fxActivityVBox" prefHeight="218.0" prefWidth="208.0" BorderPane.alignment="CENTER" />
-         </right>
          <top>
             <AnchorPane prefHeight="105.0" prefWidth="837.0" BorderPane.alignment="CENTER">
                <children>
@@ -88,6 +86,13 @@
                </children>
             </AnchorPane>
          </center>
+         <right>
+            <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <content>
+                  <VBox fx:id="fxActivityVBox" prefHeight="458.0" prefWidth="185.0" />
+               </content>
+            </ScrollPane>
+         </right>
       </BorderPane>
    </children>
 </AnchorPane>

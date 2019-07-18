@@ -4,10 +4,10 @@ import com.enumerations.ActivityDuration;
 import com.gui.base.BaseJavaFXController;
 import com.enumerations.ActivityType;
 import com.exception.UIException;
-import com.exception.UIExceptionType;
+import com.gui.utilities.ParsingService;
+import com.gui.utilities.ValditionService;
 import com.models.Activity;
 import com.repositories.ActivityRepository;
-import com.utilities.HexColorPicker;
 import com.utilities.JFXUtilities;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,8 +21,6 @@ import org.controlsfx.control.CheckComboBox;
 
 import java.net.URL;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.EnumSet;
 import java.util.ResourceBundle;
 
 public class AddNewActivityController extends BaseJavaFXController implements Initializable{
@@ -37,6 +35,8 @@ public class AddNewActivityController extends BaseJavaFXController implements In
 
     //endregion
 
+    private ActivityRepository repository;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.<ActivityType>fillComboBox(fxTypeComboBox, Arrays.stream(ActivityType.values()));
@@ -45,10 +45,13 @@ public class AddNewActivityController extends BaseJavaFXController implements In
 
     public void saveActivity(ActionEvent actionEvent) {
         try {
-            validateFields();
-            Activity model = parseModel();
-            ActivityRepository repository = new ActivityRepository();
-            repository.<Activity>insert(model);
+            ValditionService.validateActivityFields(fxNameTextField, fxWeightTextField, fxDescriptionTextField,
+                    fxTypeComboBox, fxDurationCheckComboBox);
+
+            Activity model = ParsingService.parseActivityModel(fxNameTextField, fxWeightTextField, fxDescriptionTextField,
+                    fxTypeComboBox, fxDurationCheckComboBox);
+
+            this.repository.<Activity>insert(model);
         } catch (UIException e) {
             JFXUtilities.showAlert(e.getTitle(), e.getErrorMessage(), Alert.AlertType.ERROR);
         } catch (Exception e) {
@@ -65,46 +68,10 @@ public class AddNewActivityController extends BaseJavaFXController implements In
     }
 
     /**
-     * Validate if fields are in correct format
-     * @throws UIException
+     * Initialize data from parent controller
+     * @param repository
      */
-    private void validateFields() throws UIException {
-
-        if (!fxNameTextField.getText().matches(ALPHANUMERIC_REGEX) || fxNameTextField.getText().isEmpty())
-            throw new UIException("Name", "Wrong fields", UIExceptionType.InvalidFields);
-
-        if (fxNameTextField.getText().length() > 25)
-            throw new UIException("Name field should be up to 25 characters", "Wrong fields");
-
-        if (fxDurationCheckComboBox.getCheckModel().getCheckedItems().isEmpty())
-            throw new UIException("Duration", "Wrong fields", UIExceptionType.InvalidFields);
-
-        if (!fxWeightTextField.getText().matches(NUMERIC_REGEX) || fxWeightTextField.getText().isEmpty())
-            throw new UIException("Weight", "Wrong fields", UIExceptionType.InvalidFields);
-
-        if (fxDescriptionTextField.getText().length() > 250 || fxDescriptionTextField.getText().isEmpty())
-            throw new UIException("Description too long or empty, maximum amount 250 characters", "Wrong fields");
-
-        if(fxTypeComboBox.getValue() == null)
-            throw new UIException("Type not selected", "Wrong fields", UIExceptionType.InvalidFields);
-    }
-
-    /**
-     * Parse out activity model from javafx fields
-     * @throws UIException
-     * @return
-     */
-    private Activity parseModel() throws Exception{
-        Activity model = new Activity();
-
-        model.name = fxNameTextField.getText();
-        model.weight = Integer.parseInt(fxWeightTextField.getText());
-        model.description = fxDescriptionTextField.getText();
-        model.type = fxTypeComboBox.getValue();
-        model.expectedDurations = EnumSet.copyOf(fxDurationCheckComboBox.getCheckModel().getCheckedItems());
-        model.createdAt = new Date().getTime()/1000; // Unix time stamp
-        model.hexColor = HexColorPicker.getRandomColor();
-
-        return model;
+    public void initData(ActivityRepository repository){
+        this.repository = repository;
     }
 }

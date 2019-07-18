@@ -33,4 +33,10 @@ public class Activity {
         if (weight < 1 || weight > 5)
             throw new UIException("Weight can only be between 1 and 5", "Wrong fields");
     }
+
+    public String getText(){
+        return name + System.lineSeparator()
+                + type + System.lineSeparator()
+                + description;
+    }
 }
