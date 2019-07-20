@@ -38,6 +38,7 @@ public class ActivityTabController extends BaseJavaFXController implements Initi
     //endregion
 
     private final String ADD_NEW_ACTIVITY_FXML = "AddNewActivity";
+    private final String EDIT_ACTIVITY_FXML = "EditActivity";
     private ActivityRepository repository;
 
     // containers to keep references
@@ -47,19 +48,20 @@ public class ActivityTabController extends BaseJavaFXController implements Initi
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.dir = "tabs/activity/";
         this.repository = new ActivityRepository();
-        setActivities();
+        refreshActivities();
     }
 
     public void openAddNewActivity(ActionEvent actionEvent) {
         AddNewActivityController controller = moveToStage(ADD_NEW_ACTIVITY_FXML, "New Activity", false);
-        controller.initData(this.repository);
+        controller.initData(this.repository, this);
     }
 
     private void openEditActivity(int activityId) {
-        console.appendText("Button with activityID pressed: " + activityId);
+        EditActivityController controller = this.moveToStage(EDIT_ACTIVITY_FXML, "Edit", false);
+        controller.initData(repository, activityId, this);
     }
 
-    private void setActivities(){
+    public void refreshActivities(){
         try {
             List<Activity> activities = repository.getAll();
             activityButtons = new LinkedList<>();
@@ -68,6 +70,9 @@ public class ActivityTabController extends BaseJavaFXController implements Initi
                 return;
 
             activities.forEach(a -> this.activityButtons.add(createButton(a)));
+
+            // Reset VBox
+            this.fxActivityVBox.getChildren().clear();
             this.fxActivityVBox.getChildren().addAll(activityButtons);
         } catch (SQLException e) {
             // Add info to console
@@ -93,9 +98,10 @@ public class ActivityTabController extends BaseJavaFXController implements Initi
     }
 
     /**
-     * External iniation of variables
+     * External initialization of variables
      */
     public void setConsole(TextArea console){
+        // TODO: add on change events to console from printing / logging
         this.console = console;
     }
 }

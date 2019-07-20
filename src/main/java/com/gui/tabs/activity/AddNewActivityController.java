@@ -36,9 +36,11 @@ public class AddNewActivityController extends BaseJavaFXController implements In
     //endregion
 
     private ActivityRepository repository;
+    private ActivityTabController mainController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.setStage(fxRootPane);
         this.<ActivityType>fillComboBox(fxTypeComboBox, Arrays.stream(ActivityType.values()));
         this.<ActivityDuration>fillCheckComboBox(fxDurationCheckComboBox, ActivityDuration.getValues());
     }
@@ -52,26 +54,28 @@ public class AddNewActivityController extends BaseJavaFXController implements In
                     fxTypeComboBox, fxDurationCheckComboBox);
 
             this.repository.<Activity>insert(model);
+
+            // After insertion renew displayed activity list
+            this.mainController.refreshActivities();
         } catch (UIException e) {
             JFXUtilities.showAlert(e.getTitle(), e.getErrorMessage(), Alert.AlertType.ERROR);
         } catch (Exception e) {
             JFXUtilities.showAlert("Insertion failed", "Insertion failed, check the console for more details", Alert.AlertType.ERROR);
+            this.closeCurrentStage();
         }
     }
 
     public void close(ActionEvent actionEvent) {
-        try {
             this.closeCurrentStage();
-        } catch (UIException e) {
-            JFXUtilities.showAlert(e.getTitle(), e.getErrorMessage(), Alert.AlertType.ERROR);
-        }
     }
 
     /**
      * Initialize data from parent controller
      * @param repository
+     * @param mainController
      */
-    public void initData(ActivityRepository repository){
+    public void initData(ActivityRepository repository, ActivityTabController mainController){
         this.repository = repository;
+        this.mainController = mainController;
     }
 }

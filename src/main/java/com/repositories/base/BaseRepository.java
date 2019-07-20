@@ -3,7 +3,6 @@ package com.repositories.base;
 import jdk.jshell.spi.ExecutionControl;
 
 import java.sql.*;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,22 +36,7 @@ public class BaseRepository extends AbstractBaseRepository {
     }
 
     @Override
-    protected <T> List<T> parseResult(ResultSet rs) throws ExecutionControl.NotImplementedException, SQLException {
-        throw new ExecutionControl.NotImplementedException("Not yet implemented");
-    }
-
-    @Override
-    public <T> List<T> getAll() throws ExecutionControl.NotImplementedException, SQLException {
-        throw new ExecutionControl.NotImplementedException("Not yet implemented");
-    }
-
-    @Override
-    public <T> void insert(T entity) throws ExecutionControl.NotImplementedException, SQLException {
-        throw new ExecutionControl.NotImplementedException("Not yet implemented");
-    }
-
-    @Override
-    protected String constructInsertSql(HashMap<String, String> fields, String table) {
+    protected String constructInsertSql(Map<String, String> fields, String table) {
         String fieldSql = "INSERT INTO " + table + " (";
         String valueSql = "VALUES (";
 
@@ -69,14 +53,8 @@ public class BaseRepository extends AbstractBaseRepository {
         return fieldSql + " " + valueSql;
     }
 
-
     @Override
-    public <T> void update(T entity) throws ExecutionControl.NotImplementedException, SQLException {
-        throw new ExecutionControl.NotImplementedException("Not yet implemented");
-    }
-
-    @Override
-    protected String constructUpdateSql(HashMap<String, String> fields, int id, String table) {
+    protected String constructUpdateSql(Map<String, String> fields, int id, String table) {
         String sql = "UPDATE " + table + " SET ";
 
         for (Map.Entry<String, String> entry :
@@ -89,7 +67,32 @@ public class BaseRepository extends AbstractBaseRepository {
     }
 
     @Override
-    public <T> void delete(T entity) throws ExecutionControl.NotImplementedException, SQLException {
+    protected <T> List<T> parseResult(ResultSet rs) throws ExecutionControl.NotImplementedException, SQLException {
+        throw new ExecutionControl.NotImplementedException("Not yet implemented");
+    }
+
+    @Override
+    public <T> List<T> getAll() throws ExecutionControl.NotImplementedException, SQLException {
+        throw new ExecutionControl.NotImplementedException("Not yet implemented");
+    }
+
+    @Override
+    public <T> T getById(int id) throws ExecutionControl.NotImplementedException, SQLException {
+        throw new ExecutionControl.NotImplementedException("Not yet implemented");
+    }
+
+    @Override
+    public <T> void insert(T entity) throws ExecutionControl.NotImplementedException, SQLException {
+        throw new ExecutionControl.NotImplementedException("Not yet implemented");
+    }
+
+    @Override
+    public <T> void update(T entity, int id) throws ExecutionControl.NotImplementedException, SQLException {
+        throw new ExecutionControl.NotImplementedException("Not yet implemented");
+    }
+
+    @Override
+    public void delete(int id) throws ExecutionControl.NotImplementedException, SQLException {
         throw new ExecutionControl.NotImplementedException("Not yet implemented");
     }
 

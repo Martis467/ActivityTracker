@@ -4,8 +4,8 @@ import jdk.jshell.spi.ExecutionControl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 abstract class AbstractBaseRepository {
     /**
@@ -22,7 +22,7 @@ abstract class AbstractBaseRepository {
     abstract ResultSet executeSql(String sql) throws SQLException;
 
     /**
-     * Execute sql query
+     * Execute sql query which edits the table T entities
      * @param sql
      * @throws SQLException
      */
@@ -46,6 +46,15 @@ abstract class AbstractBaseRepository {
     abstract <T> List<T> getAll() throws ExecutionControl.NotImplementedException, SQLException;
 
     /**
+     * Get a single table T entity
+     * @param <T>
+     * @return
+     * @throws ExecutionControl.NotImplementedException
+     * @throws SQLException
+     */
+    abstract <T> T getById(int id) throws ExecutionControl.NotImplementedException, SQLException;
+
+    /**
      * Insert new entity of type T to database
      * @param entity
      * @param <T>
@@ -61,7 +70,7 @@ abstract class AbstractBaseRepository {
      * @param table
      * @return
      */
-    abstract String constructInsertSql(HashMap<String, String> fields, String table);
+    abstract String constructInsertSql(Map<String, String> fields, String table);
 
     /**
      * Update an entity of type T in database
@@ -71,7 +80,7 @@ abstract class AbstractBaseRepository {
      * @throws ExecutionControl.NotImplementedException
      * @throws SQLException
      */
-    abstract <T> void update(T entity) throws ExecutionControl.NotImplementedException, SQLException;
+    abstract <T> void update(T entity, int id) throws ExecutionControl.NotImplementedException, SQLException;
 
     /**
      * Constructs an update statement from a given dictionary
@@ -79,14 +88,13 @@ abstract class AbstractBaseRepository {
      * @param table
      * @return
      */
-    abstract String constructUpdateSql(HashMap<String, String> fields, int id, String table);
+    abstract String constructUpdateSql(Map<String, String> fields, int id, String table);
 
     /**
      * Delete an entity of type T from the database
-     * @param entity
-     * @param <T>
+     * @param id
      * @throws ExecutionControl.NotImplementedException
      * @throws SQLException
      */
-    abstract <T> void delete(T entity) throws ExecutionControl.NotImplementedException, SQLException;
+    abstract void delete(int id) throws ExecutionControl.NotImplementedException, SQLException;
 }

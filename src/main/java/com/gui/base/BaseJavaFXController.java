@@ -65,9 +65,11 @@ public class BaseJavaFXController {
     /**
      * Closes current stage
      */
-    protected void closeCurrentStage() throws UIException {
+    protected void closeCurrentStage() {
         if (fxStage == null)
-            throw new UIException(this.getClass().getSimpleName(), "Cannot close window", UIExceptionType.NullElement);
+            System.out.println("Eror, base stage not set");
+
+        fxStage.close();
     }
 
     /**

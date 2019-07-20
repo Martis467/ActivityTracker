@@ -2,6 +2,7 @@ package com.enumerations;
 
 import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
 public enum ActivityDuration {
@@ -44,13 +45,14 @@ public enum ActivityDuration {
 
     /**
      * Translates an integer code into a EnumSet of enum flags
+     *
      * @param statusValue
      * @return Enum flags
      */
     public static EnumSet<ActivityDuration> getFlags(int statusValue) {
         EnumSet flags = EnumSet.noneOf(ActivityDuration.class);
         Arrays.stream(ActivityDuration.values()).forEach(flag -> {
-                    int flagValue = flag.duration;
+                    int flagValue = (1 << flag.ordinal());
                     if ((flagValue & statusValue) == flagValue)
                         flags.add(flag);
                 }
@@ -60,10 +62,23 @@ public enum ActivityDuration {
 
     /**
      * Translates a set of enum flags to into a numeric status code
+     *
      * @param flags
      * @return integer code representing EnumSet
      */
     public static int getStatusValue(EnumSet<ActivityDuration> flags) {
-        return flags.stream().mapToInt(flag -> flag.duration).reduce(0, (a, b) -> a | b);
+        Hack hack = new Hack();
+        hack.hackInt = 0;
+        flags.forEach(falg -> hack.hackInt |= (1 << falg.ordinal()));
+        return hack.hackInt;
+    }
+
+    // Since java doesn't allow int type to be used in lambdas
+    // Couldn't come with a proper and simple way of exposing int =| val to get a value out of enumset
+    static class Hack {
+        public int hackInt;
+
+        public Hack() {
+        }
     }
 }
