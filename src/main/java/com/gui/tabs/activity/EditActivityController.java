@@ -5,7 +5,7 @@ import com.enumerations.ActivityType;
 import com.exception.UIException;
 import com.gui.base.BaseJavaFXController;
 import com.gui.utilities.ParsingService;
-import com.gui.utilities.ValditionService;
+import com.gui.utilities.ValidationService;
 import com.models.Activity;
 import com.repositories.ActivityRepository;
 import com.utilities.JFXUtilities;
@@ -64,6 +64,9 @@ public class EditActivityController extends BaseJavaFXController {
 
     public void removeActivity(ActionEvent actionEvent) {
         try {
+            if (!JFXUtilities.showConfirmation("Delete activity", "Are you sure you want to delete this activity?"))
+                return;
+
             this.repository.delete(activityId);
 
             // After deletion renew displayed activity list
@@ -76,7 +79,7 @@ public class EditActivityController extends BaseJavaFXController {
 
     public void updateActivity(ActionEvent actionEvent) {
         try {
-            ValditionService.validateActivityFields(fxNameTextField, fxWeightTextField, fxDescriptionTextField,
+            ValidationService.validateActivityFields(fxNameTextField, fxWeightTextField, fxDescriptionTextField,
                     fxTypeComboBox, fxDurationCheckComboBox);
 
             Activity model = ParsingService.parseActivityModel(fxNameTextField, fxWeightTextField, fxDescriptionTextField,

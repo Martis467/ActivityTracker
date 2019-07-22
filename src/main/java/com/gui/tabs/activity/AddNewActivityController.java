@@ -5,7 +5,7 @@ import com.gui.base.BaseJavaFXController;
 import com.enumerations.ActivityType;
 import com.exception.UIException;
 import com.gui.utilities.ParsingService;
-import com.gui.utilities.ValditionService;
+import com.gui.utilities.ValidationService;
 import com.models.Activity;
 import com.repositories.ActivityRepository;
 import com.utilities.JFXUtilities;
@@ -18,12 +18,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import org.controlsfx.control.CheckComboBox;
-
-import java.net.URL;
 import java.util.Arrays;
-import java.util.ResourceBundle;
 
-public class AddNewActivityController extends BaseJavaFXController implements Initializable{
+public class AddNewActivityController extends BaseJavaFXController {
     //region FXML variables
 
     @FXML private AnchorPane fxRootPane;
@@ -38,16 +35,9 @@ public class AddNewActivityController extends BaseJavaFXController implements In
     private ActivityRepository repository;
     private ActivityTabController mainController;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.setStage(fxRootPane);
-        this.<ActivityType>fillComboBox(fxTypeComboBox, Arrays.stream(ActivityType.values()));
-        this.<ActivityDuration>fillCheckComboBox(fxDurationCheckComboBox, ActivityDuration.getValues());
-    }
-
     public void saveActivity(ActionEvent actionEvent) {
         try {
-            ValditionService.validateActivityFields(fxNameTextField, fxWeightTextField, fxDescriptionTextField,
+            ValidationService.validateActivityFields(fxNameTextField, fxWeightTextField, fxDescriptionTextField,
                     fxTypeComboBox, fxDurationCheckComboBox);
 
             Activity model = ParsingService.parseActivityModel(fxNameTextField, fxWeightTextField, fxDescriptionTextField,
@@ -77,5 +67,9 @@ public class AddNewActivityController extends BaseJavaFXController implements In
     public void initData(ActivityRepository repository, ActivityTabController mainController){
         this.repository = repository;
         this.mainController = mainController;
+
+        this.<ActivityType>fillComboBox(fxTypeComboBox, Arrays.stream(ActivityType.values()));
+        this.<ActivityDuration>fillCheckComboBox(fxDurationCheckComboBox, ActivityDuration.getValues());
+        this.setStage(fxRootPane);
     }
 }

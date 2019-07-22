@@ -1,5 +1,6 @@
 package com.gui.tabs.activity;
 
+import com.exception.UIException;
 import com.gui.base.BaseJavaFXController;
 import com.models.Activity;
 import com.repositories.ActivityRepository;
@@ -22,7 +23,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ActivityTabController extends BaseJavaFXController implements Initializable {
-
     //region FXML variables
 
     @FXML private AnchorPane fxRootPane;
@@ -46,13 +46,17 @@ public class ActivityTabController extends BaseJavaFXController implements Initi
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.dir = "tabs/activity/";
-        this.repository = new ActivityRepository();
-        refreshActivities();
+        try {
+            this.setDirectory("tabs/activity/");
+            this.repository = new ActivityRepository();
+            refreshActivities();
+        } catch (UIException e) {
+            JFXUtilities.showAlert(e.getTitle(), e.getErrorMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     public void openAddNewActivity(ActionEvent actionEvent) {
-        AddNewActivityController controller = moveToStage(ADD_NEW_ACTIVITY_FXML, "New Activity", false);
+        AddNewActivityController controller = this.moveToStage(ADD_NEW_ACTIVITY_FXML, "New Activity", false);
         controller.initData(this.repository, this);
     }
 

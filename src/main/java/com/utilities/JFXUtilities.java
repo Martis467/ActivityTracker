@@ -4,15 +4,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 
 public class JFXUtilities {
 
     /**
-     * Displays and alert message and waits for the user to press confirm
+     * Displays an alert message and waits for the user to press confirm
      * @param title
      * @param message
      * @param type
@@ -23,6 +25,22 @@ public class JFXUtilities {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    /**
+     * Displays a confirmation window and return the users choise
+     * @param title
+     * @param message
+     * @return
+     */
+    public static boolean showConfirmation(String title, String message){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        Optional<ButtonType> action = alert.showAndWait();
+
+        return action.get() == ButtonType.OK;
     }
 
     /**

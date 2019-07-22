@@ -1,12 +1,12 @@
 package com.gui.base;
 
 import com.exception.UIException;
-import com.exception.UIExceptionType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -15,6 +15,7 @@ import com.utilities.JFXUtilities;
 import org.controlsfx.control.CheckComboBox;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.AbstractCollection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -126,5 +127,28 @@ public class BaseJavaFXController {
     protected <T> void fillCheckComboBox(CheckComboBox<T> checkComboBox, Stream<T> stream) {
         ObservableList<T> items = FXCollections.observableArrayList(stream.collect(Collectors.toList()));
         checkComboBox.getItems().setAll(items);
+    }
+
+    /**
+     * Set the give data picker fxml object value to current date
+     * @param datePicker
+     */
+    protected void setCurrentDate(DatePicker datePicker){
+        LocalDate date = LocalDate.now();
+        datePicker.setValue(date);
+    }
+
+    /**
+     * Set the fxml file base directory
+     * @param directory
+     * @throws UIException
+     */
+    protected void setDirectory(String directory) throws UIException {
+        if (directory.isEmpty())
+            throw new UIException("The directory of fxml files was not set or had incorrect format","Initialization failed");
+
+        if(!directory.endsWith("/")) directory += "/";
+
+        this.dir = directory;
     }
 }

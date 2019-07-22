@@ -32,8 +32,14 @@ public class Activity {
     }
 
     public void validate() throws UIException {
-        if (weight < 1 || weight > 5)
-            throw new UIException("Weight can only be between 1 and 5", "Wrong fields");
+        if(weight <= 0)
+            throw new UIException("Activity weight can only be positive", "Wrong fields");
+
+        if (weight < 1)
+            throw new UIException("Weight should be at least 1, no point in doing the activity otherwise", "Shame");
+
+        if (weight > 5)
+            throw new UIException("Weight is to high, no such activity exists", "Overkill");
     }
 
     /**

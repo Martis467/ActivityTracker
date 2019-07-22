@@ -40,7 +40,7 @@ public class ActivityRepository extends BaseRepository {
 
     @Override
     public void delete(int id) throws SQLException {
-        String sql = "DELETE FROM TABLE " + Activity.class.getSimpleName() + " WHERE Id = " + id;
+        String sql = "DELETE FROM " + Activity.class.getSimpleName() + " WHERE Id = " + id;
         this.executeUpdateSql(sql);
     }
 

@@ -14,6 +14,11 @@
                     <fx:include fx:id="activityTab" source="tabs/activity/ActivityTab.fxml" />
                 </content>
             </Tab>
+             <Tab text="Goal View">
+                 <content>
+                     <fx:include fx:id="goalTab" source="tabs/goal/GoalTab.fxml" />
+                 </content>
+             </Tab>
             <Tab text="Statistics">
                 <content>
                     <fx:include fx:id="statisticsTab" source="tabs/statistics/StatisticsTab.fxml" />
