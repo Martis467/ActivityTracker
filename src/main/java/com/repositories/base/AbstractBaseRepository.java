@@ -26,7 +26,7 @@ abstract class AbstractBaseRepository {
      * @param sql
      * @throws SQLException
      */
-    abstract void executeUpdateSql(String sql) throws SQLException;
+    abstract int executeUpdateSql(String sql) throws SQLException;
 
     /**
      * Parse result set to an entity of type T
@@ -62,7 +62,7 @@ abstract class AbstractBaseRepository {
      * @throws ExecutionControl.NotImplementedException
      * @throws SQLException
      */
-    abstract <T> void insert(T entity) throws ExecutionControl.NotImplementedException, SQLException;
+    abstract <T> int insert(T entity) throws ExecutionControl.NotImplementedException, SQLException;
 
     /**
      * Constructs an insert statement from a given field dictionary

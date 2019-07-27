@@ -28,11 +28,16 @@ public class BaseRepository extends AbstractBaseRepository {
     }
 
     @Override
-    protected void executeUpdateSql(String sql) throws SQLException {
+    protected int executeUpdateSql(String sql) throws SQLException {
         if (con == null)
             openConnection();
 
-        con.createStatement().executeUpdate(sql);
+        PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        statement.executeUpdate();
+        ResultSet rs = statement.getGeneratedKeys();
+
+        if(rs.next()) return rs.getInt(1);
+        else throw new SQLException();
     }
 
     @Override
@@ -82,7 +87,7 @@ public class BaseRepository extends AbstractBaseRepository {
     }
 
     @Override
-    public <T> void insert(T entity) throws ExecutionControl.NotImplementedException, SQLException {
+    public <T> int insert(T entity) throws ExecutionControl.NotImplementedException, SQLException {
         throw new ExecutionControl.NotImplementedException("Not yet implemented");
     }
 

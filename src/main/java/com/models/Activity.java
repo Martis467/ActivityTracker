@@ -12,7 +12,6 @@ public class Activity {
     public int id;
     public String name;
     public EnumSet<ActivityDuration> expectedDurations;
-    public int weight;
     public String description;
     public ActivityType type;
     public long createdAt;
@@ -20,26 +19,14 @@ public class Activity {
 
     public Activity() {}
 
-    public Activity(int id, String name, int expectedDurations, int weight, String description, int type, long createdAt, int hexColor) {
+    public Activity(int id, String name, int expectedDurations, String description, int type, long createdAt, int hexColor) {
         this.id = id;
         this.name = name;
         this.expectedDurations = ActivityDuration.getFlags(expectedDurations);
-        this.weight = weight;
         this.description = description;
         this.type = ActivityType.parseFromInt(type);
         this.createdAt = createdAt;
         this.hexColor = hexColor;
-    }
-
-    public void validate() throws UIException {
-        if(weight <= 0)
-            throw new UIException("Activity weight can only be positive", "Wrong fields");
-
-        if (weight < 1)
-            throw new UIException("Weight should be at least 1, no point in doing the activity otherwise", "Shame");
-
-        if (weight > 5)
-            throw new UIException("Weight is to high, no such activity exists", "Overkill");
     }
 
     /**
@@ -51,7 +38,6 @@ public class Activity {
                 + description;
     }
 
-
     /**
      * Construct a dictionary consisting of {fieldName : fieldValue}
      * @return
@@ -61,7 +47,6 @@ public class Activity {
 
         fields.put("Name", "\'" + this.name + "\'");
         fields.put("ExpectedDurations", "\'" + ActivityDuration.getStatusValue(this.expectedDurations) + "\'");
-        fields.put("Weight", String.valueOf(this.weight));
         fields.put("Description", "\'" + this.description + "\'");
         fields.put("Type", String.valueOf(this.type.getId()));
         fields.put("CreatedAt", String.valueOf(this.createdAt));

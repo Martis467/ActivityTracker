@@ -25,10 +25,10 @@ public class GoalRepository extends BaseRepository {
     }
 
     @Override
-    public <T> void insert(T entity) throws SQLException {
+    public <T> int insert(T entity) throws SQLException {
         Goal model = (Goal) entity;
         String sql = this.constructInsertSql(model.getFieldMap(), Goal.class.getSimpleName());
-        this.executeUpdateSql(sql);
+        return this.executeUpdateSql(sql);
     }
 
     @Override

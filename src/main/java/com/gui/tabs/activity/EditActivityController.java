@@ -30,8 +30,6 @@ public class EditActivityController extends BaseJavaFXController {
     @FXML
     private TextField fxNameTextField;
     @FXML
-    private TextField fxWeightTextField;
-    @FXML
     private TextArea fxDescriptionTextField;
     @FXML
     private ComboBox<ActivityType> fxTypeComboBox;
@@ -79,10 +77,10 @@ public class EditActivityController extends BaseJavaFXController {
 
     public void updateActivity(ActionEvent actionEvent) {
         try {
-            ValidationService.validateActivityFields(fxNameTextField, fxWeightTextField, fxDescriptionTextField,
+            ValidationService.validateActivityFields(fxNameTextField, fxDescriptionTextField,
                     fxTypeComboBox, fxDurationCheckComboBox);
 
-            Activity model = ParsingService.parseActivityModel(fxNameTextField, fxWeightTextField, fxDescriptionTextField,
+            Activity model = ParsingService.parseActivityModel(fxNameTextField, fxDescriptionTextField,
                     fxTypeComboBox, fxDurationCheckComboBox);
 
             this.repository.update(model, activityId);
@@ -104,7 +102,6 @@ public class EditActivityController extends BaseJavaFXController {
         this.<ActivityDuration>fillCheckComboBox(fxDurationCheckComboBox, ActivityDuration.getValues());
 
         this.fxNameTextField.setText(activity.name);
-        this.fxWeightTextField.setText(String.valueOf(activity.weight));
         this.fxDescriptionTextField.setText(activity.description);
         this.fxTypeComboBox.getSelectionModel().select(activity.type);
         activity.expectedDurations.forEach(ad -> fxDurationCheckComboBox.getCheckModel().toggleCheckState(ad));

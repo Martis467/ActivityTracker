@@ -25,10 +25,10 @@ public class ActivityRepository extends BaseRepository {
     }
 
     @Override
-    public <T> void insert(T entity) throws SQLException {
+    public <T> int insert(T entity) throws SQLException {
         Activity model = (Activity) entity;
         String sql = this.constructInsertSql(model.getFieldMap(), Activity.class.getSimpleName());
-        this.executeUpdateSql(sql);
+        return this.executeUpdateSql(sql);
     }
 
     @Override
@@ -53,7 +53,6 @@ public class ActivityRepository extends BaseRepository {
                     rs.getInt("Id"),
                     rs.getString("Name"),
                     rs.getInt("ExpectedDurations"),
-                    rs.getInt("Weight"),
                     rs.getString("Description"),
                     rs.getInt("Type"),
                     rs.getLong("CreatedAt"),

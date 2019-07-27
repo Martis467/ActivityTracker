@@ -5,12 +5,12 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.MainWindowController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="676.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.MainWindowController">
    <children>
-      <TabPane fx:id="fxRootPane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="837.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="116.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane fx:id="fxRootPane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="837.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="109.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
             <Tab text="Activity View">
-                <content >
+                <content>
                     <fx:include fx:id="activityTab" source="tabs/activity/ActivityTab.fxml" />
                 </content>
             </Tab>
@@ -26,6 +26,6 @@
             </Tab>
          </tabs>
       </TabPane>
-      <TextArea fx:id="fxConsoleTextArea" layoutY="512.0" prefHeight="118.0" prefWidth="837.0" />
+      <TextArea fx:id="fxConsoleTextArea" layoutY="572.0" prefHeight="106.0" prefWidth="837.0" />
    </children>
 </AnchorPane>

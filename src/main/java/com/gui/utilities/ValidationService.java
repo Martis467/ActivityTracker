@@ -20,13 +20,12 @@ public class ValidationService {
      * Validate if new activity fields are in correct format
      * @throws UIException
      * @param fxNameTextField
-     * @param fxWeightTextField
      * @param fxDescriptionTextField
      * @param fxTypeComboBox
      * @param fxDurationCheckComboBox
      */
-    public static void validateActivityFields(TextField fxNameTextField, TextField fxWeightTextField,
-                                              TextArea fxDescriptionTextField, ComboBox<ActivityType> fxTypeComboBox,
+    public static void validateActivityFields(TextField fxNameTextField, TextArea fxDescriptionTextField,
+                                              ComboBox<ActivityType> fxTypeComboBox,
                                               CheckComboBox<ActivityDuration> fxDurationCheckComboBox) throws UIException {
         if (!fxNameTextField.getText().matches(ALPHANUMERIC_REGEX) || fxNameTextField.getText().isEmpty())
             throw new UIException("Name", "Wrong fields", UIExceptionType.InvalidFields);
@@ -37,8 +36,9 @@ public class ValidationService {
         if (fxDurationCheckComboBox.getCheckModel().getCheckedItems().isEmpty())
             throw new UIException("Duration", "Wrong fields", UIExceptionType.InvalidFields);
 
-        if (!fxWeightTextField.getText().matches(NUMERIC_REGEX) || fxWeightTextField.getText().isEmpty())
-            throw new UIException("Weight", "Wrong fields", UIExceptionType.InvalidFields);
+        //todo: MOVE TO GOAL ACTIVITY RELATION
+        //if (!fxWeightTextField.getText().matches(NUMERIC_REGEX) || fxWeightTextField.getText().isEmpty())
+           // throw new UIException("Weight", "Wrong fields", UIExceptionType.InvalidFields);
 
         if (fxDescriptionTextField.getText().length() > 250 || fxDescriptionTextField.getText().isEmpty())
             throw new UIException("Description too long or empty, maximum amount 250 characters", "Wrong fields");
