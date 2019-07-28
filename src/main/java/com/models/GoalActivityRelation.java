@@ -11,9 +11,10 @@ public class GoalActivityRelation {
     public int goalId;
     public int weight;
 
-    public GoalActivityRelation() {}
+    public GoalActivityRelation() {
+    }
 
-    public GoalActivityRelation(int activityId, int goalId, int weight){
+    public GoalActivityRelation(int activityId, int goalId, int weight) {
         this.activityId = activityId;
         this.goalId = goalId;
         this.weight = weight;
@@ -28,10 +29,11 @@ public class GoalActivityRelation {
 
     /**
      * Returns all zero values goal activity, denoting relation does not exists
+     *
      * @return
      */
-    public static GoalActivityRelation GetDefault(){
-        return new GoalActivityRelation(0,0,0,0);
+    public static GoalActivityRelation GetDefault() {
+        return new GoalActivityRelation(0, 0, 0, 0);
     }
 
     public void validate() throws UIException {
@@ -44,9 +46,10 @@ public class GoalActivityRelation {
 
     /**
      * Construct a dictionary consisting of {fieldName : fieldValue}
+     *
      * @return
      */
-    public Map<String, String> getFieldMap(){
+    public Map<String, String> getFieldMap() {
         HashMap<String, String> fields = new HashMap<>();
 
         fields.put("ActivityId", String.valueOf(this.activityId));
@@ -54,5 +57,19 @@ public class GoalActivityRelation {
         fields.put("Weight", String.valueOf(this.weight));
 
         return fields;
+    }
+
+    @Override
+    public boolean equals(Object v) {
+
+        if (!(v instanceof GoalActivityRelation)) return false;
+
+        GoalActivityRelation ga = (GoalActivityRelation) v;
+
+        if (ga.activityId == this.activityId
+                && ga.goalId == this.goalId)
+            return true;
+
+        return false;
     }
 }

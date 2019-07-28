@@ -17,6 +17,30 @@ public class GoalActivityRelationRepository extends BaseRepository {
         return parseResult(resultSet);
     }
 
+    /**
+     * Get all activity goal relations by a given activityId
+     * @param activityId
+     * @return
+     */
+    public List<GoalActivityRelation> getByActivityId(int activityId) throws SQLException {
+        String sql = "SELECT * FROM " + GoalActivityRelation.class.getSimpleName()
+                + " WHERE ActivityId = " + activityId;
+        ResultSet resultSet = this.executeSql(sql);
+        return parseResult(resultSet);
+    }
+
+    /**
+     * Get all activity goal relations by a given activityId
+     * @param goalId
+     * @return
+     */
+    public List<GoalActivityRelation> getByGoalId(int goalId) throws SQLException {
+        String sql = "SELECT * FROM " + GoalActivityRelation.class.getSimpleName()
+                + " WHERE GoalId = " + goalId;
+        ResultSet resultSet = this.executeSql(sql);
+        return parseResult(resultSet);
+    }
+
     @Override
     public GoalActivityRelation getById(int id) throws SQLException {
         String sql = "SELECT * FROM " + GoalActivityRelation.class.getSimpleName() + " WHERE Id = " + id;

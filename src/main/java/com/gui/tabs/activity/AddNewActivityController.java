@@ -44,6 +44,30 @@ public class AddNewActivityController extends BaseJavaFXController {
 
     private final String ACTIVITY_GOAL_RELATION_FXML = "ActivityGoal";
 
+    /**
+     * Initialize data from parent controller
+     * @param repository
+     * @param mainController
+     */
+    public void initData(ActivityRepository repository, ActivityTabController mainController){
+        this.activityRepository = repository;
+        this.goalActivityRelationRepository = new GoalActivityRelationRepository();
+
+        this.mainController = mainController;
+
+        this.goalActivityRelationList = new LinkedList<>();
+
+        try {
+            this.setDirectory("tabs/activity/");
+        } catch (UIException e) {
+            JFXUtilities.showAlert(e.getTitle(), e.getErrorMessage(), Alert.AlertType.ERROR);
+        }
+
+        this.<ActivityType>fillComboBox(fxTypeComboBox, Arrays.stream(ActivityType.values()));
+        this.<ActivityDuration>fillCheckComboBox(fxDurationCheckComboBox, ActivityDuration.getValues());
+        this.setStage(fxRootPane);
+    }
+
     public void saveActivity(ActionEvent actionEvent) {
         try {
             ValidationService.validateActivityFields(fxNameTextField, fxDescriptionTextField,
@@ -81,32 +105,8 @@ public class AddNewActivityController extends BaseJavaFXController {
             this.closeCurrentStage();
     }
 
-    /**
-     * Initialize data from parent controller
-     * @param repository
-     * @param mainController
-     */
-    public void initData(ActivityRepository repository, ActivityTabController mainController){
-        this.activityRepository = repository;
-        this.goalActivityRelationRepository = new GoalActivityRelationRepository();
-
-        this.mainController = mainController;
-
-        this.goalActivityRelationList = new LinkedList<>();
-
-        try {
-            this.setDirectory("tabs/activity/");
-        } catch (UIException e) {
-            JFXUtilities.showAlert(e.getTitle(), e.getErrorMessage(), Alert.AlertType.ERROR);
-        }
-
-        this.<ActivityType>fillComboBox(fxTypeComboBox, Arrays.stream(ActivityType.values()));
-        this.<ActivityDuration>fillCheckComboBox(fxDurationCheckComboBox, ActivityDuration.getValues());
-        this.setStage(fxRootPane);
-    }
-
     public void relateToGoals(ActionEvent actionEvent) {
-        ActivityGoalController controller = this.moveToStage(ACTIVITY_GOAL_RELATION_FXML, "Relate activties to goals", false);
+        ActivityGoalController controller = this.moveToStage(ACTIVITY_GOAL_RELATION_FXML, "Relate activities to goals", false);
 
         // passing 0 id because we have not yet added this activity
         controller.initData(0, goalActivityRelationList);

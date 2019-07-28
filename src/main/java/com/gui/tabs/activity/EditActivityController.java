@@ -7,7 +7,9 @@ import com.gui.base.BaseJavaFXController;
 import com.gui.utilities.ParsingService;
 import com.gui.utilities.ValidationService;
 import com.models.Activity;
+import com.models.GoalActivityRelation;
 import com.repositories.ActivityRepository;
+import com.repositories.GoalActivityRelationRepository;
 import com.utilities.JFXUtilities;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +22,8 @@ import org.controlsfx.control.CheckComboBox;
 
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class EditActivityController extends BaseJavaFXController {
 
@@ -37,26 +41,36 @@ public class EditActivityController extends BaseJavaFXController {
     private CheckComboBox<ActivityDuration> fxDurationCheckComboBox;
 
     //endregion
-    private ActivityRepository repository;
+
+    // Repositories
+    private ActivityRepository activityRepository;
+    private GoalActivityRelationRepository goalActivityRelationRepository;
+
     private ActivityTabController mainController;
     private int activityId;
 
+    private List<GoalActivityRelation> goalActivityRelationList;
+
+    private final String ACTIVITY_GOAL_RELATION_FXML = "ActivityGoal";
     /**
      * Initialize data from parent controller
      *
      * @param repository
      */
     public void initData(ActivityRepository repository, int activityId, ActivityTabController mainController) {
-        this.repository = repository;
+        this.activityRepository = repository;
         this.setStage(fxRootPane);
         this.mainController = mainController;
         this.activityId = activityId;
 
         try {
+            this.setDirectory("tabs/activity/");
             initFields();
         } catch (SQLException e) {
             JFXUtilities.showAlert("Not found", "Error while fetching data from database, activity was not found", Alert.AlertType.ERROR);
             this.closeCurrentStage();
+        } catch (UIException e) {
+            JFXUtilities.showAlert(e.getTitle(), e.getErrorMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -65,7 +79,12 @@ public class EditActivityController extends BaseJavaFXController {
             if (!JFXUtilities.showConfirmation("Delete activity", "Are you sure you want to delete this activity?"))
                 return;
 
-            this.repository.delete(activityId);
+            this.activityRepository.delete(activityId);
+
+            for (GoalActivityRelation ga :
+                    goalActivityRelationList) {
+                this.goalActivityRelationRepository.delete(ga.id);
+            }
 
             // After deletion renew displayed activity list
             this.mainController.refreshActivities();
@@ -83,7 +102,9 @@ public class EditActivityController extends BaseJavaFXController {
             Activity model = ParsingService.parseActivityModel(fxNameTextField, fxDescriptionTextField,
                     fxTypeComboBox, fxDurationCheckComboBox);
 
-            this.repository.update(model, activityId);
+            this.activityRepository.update(model, activityId);
+
+            handleGoalActivityRelationUpdate();
 
             // After update renew displayed activity list
             this.mainController.refreshActivities();
@@ -95,8 +116,18 @@ public class EditActivityController extends BaseJavaFXController {
         this.closeCurrentStage();
     }
 
+    public void relateToGoals(ActionEvent actionEvent) {
+        ActivityGoalController controller = this.moveToStage(this.ACTIVITY_GOAL_RELATION_FXML, "Relate activities to goals", false);
+
+        // passing 0 id because we have not yet added this activity
+        controller.initData(this.activityId, this.goalActivityRelationList);
+    }
+
     private void initFields() throws SQLException {
-        Activity activity = this.repository.getById(this.activityId);
+        Activity activity = this.activityRepository.getById(this.activityId);
+        this.goalActivityRelationRepository = new GoalActivityRelationRepository();
+
+        this.goalActivityRelationList = this.goalActivityRelationRepository.getByActivityId(this.activityId);
 
         this.<ActivityType>fillComboBox(fxTypeComboBox, Arrays.stream(ActivityType.values()));
         this.<ActivityDuration>fillCheckComboBox(fxDurationCheckComboBox, ActivityDuration.getValues());
@@ -105,5 +136,31 @@ public class EditActivityController extends BaseJavaFXController {
         this.fxDescriptionTextField.setText(activity.description);
         this.fxTypeComboBox.getSelectionModel().select(activity.type);
         activity.expectedDurations.forEach(ad -> fxDurationCheckComboBox.getCheckModel().toggleCheckState(ad));
+    }
+
+    private void handleGoalActivityRelationUpdate() throws SQLException {
+        List<GoalActivityRelation> updateGars = this.goalActivityRelationRepository.getByActivityId(this.activityId);
+
+        List<GoalActivityRelation> deleteGars = updateGars.stream()
+                        .filter(ga -> !goalActivityRelationList.contains(ga))
+                        .collect(Collectors.toList());
+
+        List<GoalActivityRelation> createGars = goalActivityRelationList.stream()
+                .filter(ga -> !updateGars.contains(ga))
+                .collect(Collectors.toList());
+
+        updateGars.removeAll(deleteGars);
+
+        if (!deleteGars.isEmpty()){
+            for (GoalActivityRelation ga : deleteGars) goalActivityRelationRepository.delete(ga.id);
+        }
+
+        if(!createGars.isEmpty()){
+            for (GoalActivityRelation ga : createGars) goalActivityRelationRepository.insert(ga);
+        }
+
+        if(!updateGars.isEmpty()){
+            for (GoalActivityRelation ga : updateGars) goalActivityRelationRepository.update(ga, ga.id);
+        }
     }
 }
