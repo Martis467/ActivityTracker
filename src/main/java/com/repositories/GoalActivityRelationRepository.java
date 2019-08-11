@@ -1,5 +1,7 @@
 package com.repositories;
 
+import com.models.Activity;
+import com.models.Goal;
 import com.models.GoalActivityRelation;
 import com.repositories.base.BaseRepository;
 
@@ -15,6 +17,17 @@ public class GoalActivityRelationRepository extends BaseRepository {
         String sql = "SELECT * FROM " + GoalActivityRelation.class.getSimpleName();
         ResultSet resultSet = this.executeSql(sql);
         return parseResult(resultSet);
+    }
+
+    /**
+     * Get all goal activities mapped
+     * @return
+     * @throws SQLException
+     */
+    public List<GoalActivityRelation> getAllMapped() throws SQLException {
+        String sql = SqlViews.GoalActivityRelationView;
+        ResultSet resultSet = this.executeSql(sql);
+        return parseMappedResult(resultSet);
     }
 
     /**
@@ -78,6 +91,43 @@ public class GoalActivityRelationRepository extends BaseRepository {
                     rs.getInt("ActivityId"),
                     rs.getInt("GoalId"),
                     rs.getInt("Weight")
+            ));
+        }
+        return activities;
+    }
+
+    private List<GoalActivityRelation> parseMappedResult(ResultSet rs) throws SQLException {
+        List<GoalActivityRelation> activities = new LinkedList<>();
+
+        while (rs.next()){
+            Activity activity = new Activity(
+                    rs.getInt("ActivityId"),
+                    rs.getString("ActivityName"),
+                    rs.getInt("ExpectedDurations"),
+                    rs.getString("ActivityDescription"),
+                    rs.getInt("ActivityType"),
+                    rs.getLong("ActivityCreatedAt"),
+                    rs.getInt("ActivityHexColor"));
+
+            Goal goal = new Goal(
+                    rs.getInt("GoalId"),
+                    rs.getString("GoalName"),
+                    rs.getInt("CompletionWeight"),
+                    rs.getString("GoalDescription"),
+                    rs.getLong("GoalCreatedAt"),
+                    rs.getLong("ExpectedFinish"),
+                    rs.getLong("Finished"),
+                    rs.getInt("GoalType"),
+                    rs.getFloat("Percentage"),
+                    rs.getLong("GoalHexColor"));
+
+            activities.add(new GoalActivityRelation(
+                    rs.getInt("Id"),
+                    rs.getInt("ActivityId"),
+                    rs.getInt("GoalId"),
+                    rs.getInt("Weight"),
+                    activity,
+                    goal
             ));
         }
         return activities;

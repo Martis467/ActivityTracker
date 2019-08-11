@@ -24,6 +24,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class AddNewActivityController extends BaseJavaFXController {
+
+    private final String ACTIVITY_GOAL_RELATION_FXML = "ActivityGoal";
+
     //region FXML variables
 
     @FXML private AnchorPane fxRootPane;
@@ -41,8 +44,6 @@ public class AddNewActivityController extends BaseJavaFXController {
     private ActivityTabController mainController;
 
     private List<GoalActivityRelation> goalActivityRelationList;
-
-    private final String ACTIVITY_GOAL_RELATION_FXML = "ActivityGoal";
 
     /**
      * Initialize data from parent controller
@@ -78,7 +79,6 @@ public class AddNewActivityController extends BaseJavaFXController {
 
             int id = this.activityRepository.<Activity>insert(model);
 
-            // After insertion renew displayed activity list
             this.mainController.refreshActivities();
 
             if(goalActivityRelationList.isEmpty()){
@@ -93,6 +93,7 @@ public class AddNewActivityController extends BaseJavaFXController {
             }
 
             this.closeCurrentStage();
+            JFXUtilities.showAlert("Activity added", "New activity has been created", Alert.AlertType.INFORMATION);
         } catch (UIException e) {
             JFXUtilities.showAlert(e.getTitle(), e.getErrorMessage(), Alert.AlertType.ERROR);
         } catch (Exception e) {
@@ -106,7 +107,7 @@ public class AddNewActivityController extends BaseJavaFXController {
     }
 
     public void relateToGoals(ActionEvent actionEvent) {
-        ActivityGoalController controller = this.moveToStage(ACTIVITY_GOAL_RELATION_FXML, "Relate activities to goals", false);
+        ActivityGoalController controller = this.moveToStage(ACTIVITY_GOAL_RELATION_FXML, "Relate activity to goals", false);
 
         // passing 0 id because we have not yet added this activity
         controller.initData(0, goalActivityRelationList);

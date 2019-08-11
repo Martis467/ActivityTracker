@@ -85,10 +85,11 @@ public class ActivityTabController extends BaseJavaFXController implements Initi
     }
 
     private Button createButton(Activity activity){
-        Button button = new Button(activity.getText());
+        Button button = new Button(activity.getShortText());
         button.setPrefWidth(this.fxActivityVBox.getPrefWidth());
         button.setPrefHeight(100.0);
-        button.textAlignmentProperty().setValue(TextAlignment.LEFT);
+        button.setMinHeight(100.0);
+        button.textAlignmentProperty().setValue(TextAlignment.CENTER);
         button.setWrapText(true);
         button.setUserData(activity.id);
         button.setOnAction(new EventHandler<ActionEvent>() {

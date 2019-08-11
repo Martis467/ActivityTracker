@@ -1,5 +1,6 @@
 package com.gui.utilities;
 
+import com.models.Activity;
 import com.models.Goal;
 import com.models.GoalActivityRelation;
 import com.utilities.JFXUtilities;
@@ -21,50 +22,85 @@ public class GridPaneUtility {
     /**
      * Create a grid pane with (CheckBox, Text, Text, TexField)
      * that monitors changes and maps activities to goals
+     *
      * @param fxRootPane
      * @param goals
      * @param goalActivities
      * @param activityId
      */
-    public static void createGridPaneActivityGoalRelationMapper(AnchorPane fxRootPane, List<Goal> goals,
-                                                                List<GoalActivityRelation> goalActivities, int activityId) {
-
-
+    public static void ActivityGoalRelationMapper(AnchorPane fxRootPane, List<Goal> goals,
+                                                  List<GoalActivityRelation> goalActivities, int activityId) {
         GridPane gridPane = getGridPane(fxRootPane.getPrefWidth(), fxRootPane.getPrefHeight());
-
+        fxRootPane.getChildren().add(gridPane);
         int i = 0;
 
         /**
          * Make a grid pane with columns like:
-         * Checkbox | GoalName | Weight
+         * Checkbox | GoalName | | GoalType | Weight
          */
         for (Goal g :
                 goals) {
-
-            CheckBox checkBox = new CheckBox();
-            Text nameText = new Text(g.name);
-            Text typeText = new Text(g.type.toString());
-            TextField textField = new TextField(getWeight(goalActivities, g.id, activityId));
-            textField.setPrefWidth(40);
-
-
-            gridPane.add(checkBox, 1, i);
-            gridPane.add(nameText, 2, i);
-            gridPane.add(typeText, 3, i);
-            gridPane.add(textField, 4, i);
+            createGridNode(gridPane, g.name, g.type.toString(), goalActivities, i, activityId, g.id);
             i++;
-
-            GoalActivityRelation gar = getGoalActivity(goalActivities, activityId, g.id);
-            textField.setText(String.valueOf(gar.weight));
-
-            if(gar.weight != 0) checkBox.selectedProperty().setValue(true);
-
-            addListeners(textField, checkBox, goalActivities, activityId, g.id);
         }
-
-        fxRootPane.getChildren().add(gridPane);
     }
 
+    /**
+     * Create a grid pane with (CheckBox, Text, Text, TexField)
+     * that monitors changes and maps activities to goals
+     *
+     * @param fxRootPane
+     * @param activities
+     * @param goalActivities
+     * @param goalId
+     */
+    public static void GoalActivityRelationMapper(AnchorPane fxRootPane, List<Activity> activities,
+                                                  List<GoalActivityRelation> goalActivities, int goalId) {
+        GridPane gridPane = getGridPane(fxRootPane.getPrefWidth(), fxRootPane.getPrefHeight());
+        fxRootPane.getChildren().add(gridPane);
+        int i = 0;
+
+        /**
+         * Make a grid pane with columns like:
+         * Checkbox | ActivityName | ActivityType | Weight
+         */
+        for (Activity a :
+                activities) {
+            createGridNode(gridPane, a.name, a.type.toString(), goalActivities, i, a.id, goalId);
+            i++;
+        }
+    }
+
+    private static void createGridNode(GridPane gridPane, String name, String type, List<GoalActivityRelation> goalActivities,
+                                       int i, int activityId, int goalId) {
+        CheckBox checkBox = new CheckBox();
+        Text nameText = new Text(name);
+        Text typeText = new Text(type);
+        TextField textField = new TextField(getWeight(goalActivities, goalId, activityId));
+        textField.setPrefWidth(40);
+
+
+        gridPane.add(checkBox, 1, i);
+        gridPane.add(nameText, 2, i);
+        gridPane.add(typeText, 3, i);
+        gridPane.add(textField, 4, i);
+
+        GoalActivityRelation gar = getGoalActivity(goalActivities, activityId, goalId);
+        textField.setText(String.valueOf(gar.weight));
+
+        if (gar.weight != 0) checkBox.selectedProperty().setValue(true);
+
+        addListeners(textField, checkBox, goalActivities, activityId, goalId);
+    }
+
+    /**
+     * Adds on change listeners to update goal activity relation on to check box and text field
+     * @param weightTextField
+     * @param checkBox
+     * @param goalActivities
+     * @param activityId
+     * @param goalId
+     */
     private static void addListeners(TextField weightTextField, CheckBox checkBox,
                                      List<GoalActivityRelation> goalActivities, int activityId, int goalId) {
 

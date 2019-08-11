@@ -7,17 +7,50 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="fxRootPane" prefHeight="563.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.tabs.goal.GoalTabController">
+<AnchorPane fx:id="fxRootPane" prefHeight="525.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.tabs.goal.GoalTabController">
    <children>
-      <MenuBar layoutY="2.0" prefHeight="29.0" prefWidth="837.0" AnchorPane.bottomAnchor="534.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ScrollPane layoutX="650.0" layoutY="123.0" prefHeight="378.0" prefWidth="186.0">
+         <content>
+            <VBox fx:id="fxActivityViewVBox" prefHeight="376.0" prefWidth="171.0" />
+         </content>
+      </ScrollPane>
+      <Button layoutX="22.0" layoutY="40.0" mnemonicParsing="false" onAction="#previousGoal" prefHeight="39.0" prefWidth="46.0">
+         <graphic>
+            <ImageView fitHeight="37.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/arrow-left.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="81.0" layoutY="40.0" mnemonicParsing="false" onAction="#openEditGoal" prefHeight="44.0" prefWidth="108.0" text="Edit goal">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="694.0" layoutY="40.0" mnemonicParsing="false" onAction="#openAddNewGoal" prefHeight="44.0" prefWidth="129.0" text="Add new goal">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="197.0" layoutY="40.0" mnemonicParsing="false" onAction="#nextGoal" prefHeight="39.0" prefWidth="46.0">
+         <graphic>
+            <ImageView fitHeight="37.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/arrow-right.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="837.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -36,54 +69,26 @@
           </Menu>
         </menus>
       </MenuBar>
-      <Button layoutX="14.0" layoutY="56.0" mnemonicParsing="false" onAction="#previousGoal" prefHeight="39.0" prefWidth="46.0">
-         <graphic>
-            <ImageView fitHeight="37.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../images/arrow-left.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button layoutX="74.0" layoutY="56.0" mnemonicParsing="false" onAction="#openEditGoal" prefHeight="44.0" prefWidth="108.0" text="Edit goal">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
-      <Button layoutX="694.0" layoutY="56.0" mnemonicParsing="false" onAction="#openAddNewGoal" prefHeight="44.0" prefWidth="129.0" text="Add new goal">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
-      <Button layoutX="189.0" layoutY="56.0" mnemonicParsing="false" onAction="#nextGoal" prefHeight="39.0" prefWidth="46.0">
-         <graphic>
-            <ImageView fitHeight="37.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../images/arrow-right.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <HBox layoutX="141.0" layoutY="101.0" prefHeight="462.0" prefWidth="837.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="101.0">
+      <AnchorPane fx:id="fxGoalAnchorPane" layoutY="84.0" prefHeight="398.0" prefWidth="650.0">
          <children>
-            <AnchorPane fx:id="fxGoalAnchorPane" prefHeight="462.0" prefWidth="650.0">
-               <children>
-                  <LineChart fx:id="fxGoalLineChart" layoutY="46.0" prefHeight="409.0" prefWidth="636.0">
-                    <xAxis>
-                      <CategoryAxis side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis minorTickCount="2" side="LEFT" tickLabelGap="5.0" upperBound="170.0" />
-                    </yAxis>
-                  </LineChart>
-                  <Text fx:id="fxGoalTitle" layoutX="287.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="37.13671875">
-                     <font>
-                        <Font size="18.0" />
-                     </font></Text>
-               </children>
-            </AnchorPane>
-            <VBox fx:id="fxActivityView" prefHeight="462.0" prefWidth="189.0" />
+            <LineChart fx:id="fxGoalLineChart" layoutY="28.0" prefHeight="407.0" prefWidth="636.0">
+               <xAxis>
+                  <CategoryAxis side="BOTTOM" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis minorTickCount="2" side="LEFT" tickLabelGap="5.0" tickLength="10.0" upperBound="160.0">
+                     <tickLabelFont>
+                        <Font size="10.0" />
+                     </tickLabelFont>
+                  </NumberAxis>
+               </yAxis>
+            </LineChart>
+            <Text fx:id="fxGoalTitle" layoutX="14.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="37.13671875">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
          </children>
-      </HBox>
+      </AnchorPane>
    </children>
 </AnchorPane>

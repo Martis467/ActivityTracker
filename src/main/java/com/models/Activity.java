@@ -2,7 +2,8 @@ package com.models;
 
 import com.enumerations.ActivityDuration;
 import com.enumerations.ActivityType;
-import com.exception.UIException;
+import com.utilities.Extensions;
+import com.utilities.JFXUtilities;
 
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -16,10 +17,12 @@ public class Activity {
     public ActivityType type;
     public long createdAt;
     public int hexColor;
+    public boolean disabled;
 
     public Activity() {}
 
-    public Activity(int id, String name, int expectedDurations, String description, int type, long createdAt, int hexColor) {
+    public Activity(int id, String name, int expectedDurations, String description, int type, long createdAt,
+                    int hexColor) {
         this.id = id;
         this.name = name;
         this.expectedDurations = ActivityDuration.getFlags(expectedDurations);
@@ -32,12 +35,18 @@ public class Activity {
     /**
      * @return display text with the activity name, type and description
      */
-    public String getText(){
+    public String getShortText(){
         return name + System.lineSeparator()
                 + type + System.lineSeparator()
                 + description;
     }
 
+    public String getLongText(){
+        return name + " (" + type + ")" + System.lineSeparator()
+                + description + System.lineSeparator()
+                + Extensions.getDate(createdAt) + System.lineSeparator()
+                + "Total time spent: 0";
+    }
     /**
      * Construct a dictionary consisting of {fieldName : fieldValue}
      * @return
@@ -51,6 +60,7 @@ public class Activity {
         fields.put("Type", String.valueOf(this.type.getId()));
         fields.put("CreatedAt", String.valueOf(this.createdAt));
         fields.put("HexColor", String.valueOf(this.hexColor));
+        fields.put("Disabled", String.valueOf(Extensions.boolToInt(this.disabled)));
 
         return fields;
     }

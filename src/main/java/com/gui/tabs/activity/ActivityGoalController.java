@@ -34,7 +34,7 @@ public class ActivityGoalController extends BaseJavaFXController {
 
         try {
             List<Goal> goals = goalRepository.getAll();
-            GridPaneUtility.createGridPaneActivityGoalRelationMapper(fxRootPane, goals, goalActivities, activityId);
+            GridPaneUtility.ActivityGoalRelationMapper(fxRootPane, goals, goalActivities, activityId);
 
         } catch (SQLException e) {
             JFXUtilities.showAlert("Not found", "Error while fetching data from database, activity goal relation was not found", Alert.AlertType.ERROR);

@@ -52,10 +52,12 @@ public class EditActivityController extends BaseJavaFXController {
     private List<GoalActivityRelation> goalActivityRelationList;
 
     private final String ACTIVITY_GOAL_RELATION_FXML = "ActivityGoal";
+
     /**
      * Initialize data from parent controller
-     *
      * @param repository
+     * @param activityId
+     * @param mainController
      */
     public void initData(ActivityRepository repository, int activityId, ActivityTabController mainController) {
         this.activityRepository = repository;
@@ -65,33 +67,13 @@ public class EditActivityController extends BaseJavaFXController {
 
         try {
             this.setDirectory("tabs/activity/");
-            initFields();
+            this.initFields();
         } catch (SQLException e) {
             JFXUtilities.showAlert("Not found", "Error while fetching data from database, activity was not found", Alert.AlertType.ERROR);
             this.closeCurrentStage();
         } catch (UIException e) {
             JFXUtilities.showAlert(e.getTitle(), e.getErrorMessage(), Alert.AlertType.ERROR);
         }
-    }
-
-    public void removeActivity(ActionEvent actionEvent) {
-        try {
-            if (!JFXUtilities.showConfirmation("Delete activity", "Are you sure you want to delete this activity?"))
-                return;
-
-            this.activityRepository.delete(activityId);
-
-            for (GoalActivityRelation ga :
-                    goalActivityRelationList) {
-                this.goalActivityRelationRepository.delete(ga.id);
-            }
-
-            // After deletion renew displayed activity list
-            this.mainController.refreshActivities();
-        } catch (SQLException e) {
-            JFXUtilities.showAlert("Delete failed", "Error deleting data from database, activity was not found", Alert.AlertType.ERROR);
-        }
-        this.closeCurrentStage();
     }
 
     public void updateActivity(ActionEvent actionEvent) {
@@ -114,6 +96,26 @@ public class EditActivityController extends BaseJavaFXController {
             JFXUtilities.showAlert("Update failed", "Error updating data in database, activity was not found", Alert.AlertType.ERROR);
         }
         this.closeCurrentStage();
+    }
+
+    public void removeActivity(ActionEvent actionEvent) {
+        try {
+            if (!JFXUtilities.showConfirmation("Delete activity", "Are you sure you want to delete this activity?"))
+                return;
+
+            this.activityRepository.delete(activityId);
+
+            for (GoalActivityRelation ga :
+                    goalActivityRelationList) {
+                this.goalActivityRelationRepository.delete(ga.id);
+            }
+
+            // After deletion renew displayed activity list
+            this.mainController.refreshActivities();
+            this.closeCurrentStage();
+        } catch (SQLException e) {
+            JFXUtilities.showAlert("Delete failed", "Error deleting data from database, activity was not found", Alert.AlertType.ERROR);
+        }
     }
 
     public void relateToGoals(ActionEvent actionEvent) {

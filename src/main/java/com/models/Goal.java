@@ -2,6 +2,7 @@ package com.models;
 
 import com.enumerations.GoalType;
 import com.exception.UIException;
+import com.utilities.Extensions;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -20,6 +21,7 @@ public class Goal {
     public GoalType type;
     public float percentage;
     public long hexColor;
+    public boolean completed;
 
     public Goal() {}
 
@@ -50,10 +52,13 @@ public class Goal {
         LocalDate expectedFinishDate = Instant.ofEpochMilli(expectedFinish).atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate now = LocalDate.now();
 
-        if(!expectedFinishDate.isAfter(now))
+        // days * hours * minutes * seconds * milliseconds
+        long threeDayInterval = 3 * 24 * 60 * 60 * 1000;
+
+        if(!expectedFinishDate.isAfter(now) && id == 0)
             throw new UIException("Expected finish should be further at least 3 days from now", "Wrong fields");
 
-        if(expectedFinishDate.getDayOfYear() < (now.getDayOfYear() + 3))
+        if(Extensions.getUnixTimeStamp(expectedFinishDate) - Extensions.getUnixTimeStamp(now) < threeDayInterval)
             throw new UIException("Expected finish should be further at least 3 days from now", "Wrong fields");
     }
 
@@ -73,6 +78,7 @@ public class Goal {
         fields.put("Type", String.valueOf(this.type.getId()));
         fields.put("Percentage", String.valueOf(this.percentage));
         fields.put("HexColor", String.valueOf(this.hexColor));
+        fields.put("Completed", String.valueOf(Extensions.boolToInt(this.completed)));
 
         return fields;
     }

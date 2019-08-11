@@ -1,6 +1,7 @@
 package com.models;
 
 import com.exception.UIException;
+import com.utilities.Extensions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,10 @@ public class GoalActivityRelation {
     public int activityId;
     public int goalId;
     public int weight;
+    public boolean completed;
+
+    public Goal goal;
+    public Activity activity;
 
     public GoalActivityRelation() {
     }
@@ -25,6 +30,15 @@ public class GoalActivityRelation {
         this.activityId = activityId;
         this.goalId = goalId;
         this.weight = weight;
+    }
+
+    public GoalActivityRelation(int id, int activityId, int goalId, int weight, Activity activity, Goal goal) {
+        this.id = id;
+        this.activityId = activityId;
+        this.goalId = goalId;
+        this.weight = weight;
+        this.activity = activity;
+        this.goal = goal;
     }
 
     /**
@@ -55,6 +69,7 @@ public class GoalActivityRelation {
         fields.put("ActivityId", String.valueOf(this.activityId));
         fields.put("GoalId", String.valueOf(this.goalId));
         fields.put("Weight", String.valueOf(this.weight));
+        fields.put("Completed", String.valueOf(Extensions.boolToInt(this.completed)));
 
         return fields;
     }

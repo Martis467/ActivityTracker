@@ -37,7 +37,7 @@ public class ValidationService {
             throw new UIException("Duration", "Wrong fields", UIExceptionType.InvalidFields);
 
         //todo: MOVE TO GOAL ACTIVITY RELATION
-        //if (!fxWeightTextField.getText().matches(NUMERIC_REGEX) || fxWeightTextField.getText().isEmpty())
+        //if (!fxWeightTextField.getShortText().matches(NUMERIC_REGEX) || fxWeightTextField.getShortText().isEmpty())
            // throw new UIException("Weight", "Wrong fields", UIExceptionType.InvalidFields);
 
         if (fxDescriptionTextField.getText().length() > 250 || fxDescriptionTextField.getText().isEmpty())

@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="fxRootPane" prefHeight="367.0" prefWidth="345.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.tabs.goal.AddNewGoalController">
+<AnchorPane fx:id="fxRootPane" prefHeight="367.0" prefWidth="345.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gui.tabs.goal.AddNewGoalController">
     <children>
         <Text layoutX="108.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add new goal">
             <font>
@@ -43,10 +43,11 @@
                 <Font size="16.0" />
             </font>
         </Text>
-        <Button layoutX="240.0" layoutY="309.0" mnemonicParsing="false" onAction="#saveGoal" prefHeight="44.0" prefWidth="91.0" text="Save" />
+        <Button layoutX="240.0" layoutY="309.0" mnemonicParsing="false" onAction="#saveGoal" prefHeight="44.0" prefWidth="92.0" text="Save" />
         <TextArea fx:id="fxDescriptionTextField" layoutX="181.0" layoutY="121.0" prefHeight="86.0" prefWidth="145.0" />
-        <Button layoutX="11.0" layoutY="309.0" mnemonicParsing="false" onAction="#close" prefHeight="44.0" prefWidth="91.0" text="Cancel" />
+        <Button layoutX="11.0" layoutY="309.0" mnemonicParsing="false" onAction="#close" prefHeight="44.0" prefWidth="92.0" text="Cancel" />
         <ComboBox fx:id="fxTypeComboBox" layoutX="181.0" layoutY="251.0" prefHeight="25.0" prefWidth="145.0" />
       <DatePicker fx:id="fxExpectedFinishDatePicker" layoutX="181.0" layoutY="222.0" prefHeight="25.0" prefWidth="145.0" />
+      <Button layoutX="127.0" layoutY="309.0" mnemonicParsing="false" onAction="#relateToActivities" prefHeight="44.0" prefWidth="92.0" text="Relate to activities" textAlignment="CENTER" wrapText="true" />
     </children>
 </AnchorPane>
