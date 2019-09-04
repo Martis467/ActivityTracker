@@ -15,3 +15,9 @@ VALUES ('Goal2', 1500, 'Doing Goal2', 1564162450, 1564163450, NULL, 3, 0, 436018
 
 INSERT INTO Goal (Name, CompletionWeight, Description, CreatedAt, ExpectedFinish, Finished, Type, Percentage, HexColor, Completed)
 VALUES ('Goal3', 1500, 'Doing Goal3', 1564162450, 1564163450, NULL, 0, 0, 4360181, 0);
+
+INSERT INTO ActivityLog (Duration, Rating, CreatedAt, CompletedAt, ActivityId)
+VALUES (15, 3, 1564162450, 1564162450, 3);
+
+INSERT INTO ActivityLog (Duration, Rating, CreatedAt, CompletedAt, ActivityId)
+VALUES (30, 0, 1564162450, 0, 3);

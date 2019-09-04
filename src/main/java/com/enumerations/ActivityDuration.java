@@ -39,9 +39,9 @@ public enum ActivityDuration {
     }
 
     @Override
-    public String toString() {
-        return displayName;
-    }
+    public String toString() { return displayName; }
+
+    public int getDuration() { return duration;}
 
     /**
      * Translates an integer code into a EnumSet of enum flags
