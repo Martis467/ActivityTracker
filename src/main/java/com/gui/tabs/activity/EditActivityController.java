@@ -5,6 +5,7 @@ import com.enumerations.ActivityType;
 import com.exception.UIException;
 import com.gui.base.BaseJavaFXController;
 import com.gui.utilities.ParsingService;
+import com.gui.utilities.TabManager;
 import com.gui.utilities.ValidationService;
 import com.models.Activity;
 import com.models.GoalActivityRelation;
@@ -46,7 +47,7 @@ public class EditActivityController extends BaseJavaFXController {
     private ActivityRepository activityRepository;
     private GoalActivityRelationRepository goalActivityRelationRepository;
 
-    private ActivityTabController mainController;
+    private BaseJavaFXController mainController;
     private int activityId;
 
     private List<GoalActivityRelation> goalActivityRelationList;
@@ -57,12 +58,11 @@ public class EditActivityController extends BaseJavaFXController {
      * Initialize data from parent controller
      * @param repository
      * @param activityId
-     * @param mainController
      */
-    public void initData(ActivityRepository repository, int activityId, ActivityTabController mainController) {
+    public void initData(ActivityRepository repository, int activityId) {
         this.activityRepository = repository;
         this.setStage(fxRootPane);
-        this.mainController = mainController;
+        this.mainController = TabManager.getController(ActivityTabController.class);
         this.activityId = activityId;
 
         try {
@@ -89,7 +89,7 @@ public class EditActivityController extends BaseJavaFXController {
             handleGoalActivityRelationUpdate();
 
             // After update renew displayed activity list
-            this.mainController.refreshActivities();
+            this.mainController.refreshTab();
         } catch (UIException e) {
             JFXUtilities.showAlert(e.getTitle(), e.getErrorMessage(), Alert.AlertType.ERROR);
         } catch (Exception e) {
@@ -111,10 +111,12 @@ public class EditActivityController extends BaseJavaFXController {
             }
 
             // After deletion renew displayed activity list
-            this.mainController.refreshActivities();
+            this.mainController.refreshTab();
             this.closeCurrentStage();
         } catch (SQLException e) {
             JFXUtilities.showAlert("Delete failed", "Error deleting data from database, activity was not found", Alert.AlertType.ERROR);
+        } catch (UIException e) {
+            JFXUtilities.showAlert(e.getTitle(), e.getErrorMessage(), Alert.AlertType.ERROR);
         }
     }
 

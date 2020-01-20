@@ -77,7 +77,7 @@ public class AddNewGoalController extends BaseJavaFXController {
             int id = this.goalRepository.<Goal>insert(model);
 
             if (goalActivityRelationList.isEmpty()){
-                this.mainController.refreshGoals();
+                this.mainController.refreshTab();
                 this.closeCurrentStage();
                 return;
             }
@@ -87,7 +87,7 @@ public class AddNewGoalController extends BaseJavaFXController {
                 goalActivityRelationRepository.insert(ga);
             }
 
-            this.mainController.refreshGoals();
+            this.mainController.refreshTab();
             JFXUtilities.showAlert("Goal added", "New goal has been created", Alert.AlertType.INFORMATION);
         } catch (UIException e) {
             JFXUtilities.showAlert(e.getTitle(), e.getErrorMessage(), Alert.AlertType.ERROR);

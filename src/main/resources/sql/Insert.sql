@@ -20,4 +20,4 @@ INSERT INTO ActivityLog (Duration, Rating, CreatedAt, CompletedAt, ActivityId)
 VALUES (15, 3, 1564162450, 1564162450, 3);
 
 INSERT INTO ActivityLog (Duration, Rating, CreatedAt, CompletedAt, ActivityId)
-VALUES (30, 0, 1564162450, 0, 3);
+VALUES (30, 1, 1564162450, 0, 3);

@@ -60,7 +60,6 @@ public class GoalActivityRelation {
 
     /**
      * Construct a dictionary consisting of {fieldName : fieldValue}
-     *
      * @return
      */
     public Map<String, String> getFieldMap() {

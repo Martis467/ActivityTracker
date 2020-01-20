@@ -1,7 +1,10 @@
 package com.gui.tabs.activityLog;
 
 import com.enumerations.ActivityRating;
+import com.exception.UIException;
 import com.gui.base.BaseJavaFXController;
+import com.gui.tabs.goal.GoalTabController;
+import com.gui.utilities.TabManager;
 import com.models.ActivityLog;
 import com.repositories.ActivityLogRepository;
 import com.utilities.Extensions;
@@ -44,10 +47,24 @@ public class ActivityLogViewController extends BaseJavaFXController {
 
         try {
             this.repository.update(this.log, this.log.id);
+            refreshGoals();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         this.closeCurrentStage();
+    }
+
+    private void refreshGoals() {
+        Thread thread = new Thread(() -> {
+            var controller = TabManager.getController(GoalTabController.class);
+            try {
+                controller.refreshTab();
+            } catch (UIException e) {
+                e.printStackTrace();
+            }
+        });
+
+        thread.start();
     }
 
     public void initData(ActivityLog log, ActivityLogRepository repository){

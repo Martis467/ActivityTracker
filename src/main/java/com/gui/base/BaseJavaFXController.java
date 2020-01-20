@@ -37,6 +37,11 @@ public class BaseJavaFXController {
     protected final String ALPHANUMERIC_REGEX = "^[a-zA-Z0-9]+$";
     protected final String NUMERIC_REGEX = "[0-9]+";
 
+    public void refreshTab() throws UIException {
+            throw new UIException("The refresh functionality is not implemented in " + getClass().getName(),
+                    "Not implemented");
+    }
+
     /**
      * Move to next stage
      * @param xmlFile gui file name to switch to

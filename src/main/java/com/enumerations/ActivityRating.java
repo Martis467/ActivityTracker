@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public enum ActivityRating {
 
+    Unknown(0, "Unknown"),
     Terrible(1, "Terrible"),
     Bad(2, "Bad"),
     Average(3, "Average"),
@@ -20,7 +21,7 @@ public enum ActivityRating {
 
     public static ActivityRating parseFromInt(int rating){
         return Arrays.stream(values())
-                .filter(e -> e.rating == rating).findFirst().orElseThrow();
+                .filter(e -> e.rating == rating).findFirst().orElse(ActivityRating.Unknown);
     }
 
     @Override

@@ -52,7 +52,7 @@ public class ActivityLogTabController extends BaseJavaFXController implements In
             this.<ActivityType>fillCheckComboBox(fxActivityTypeCheckBox, Arrays.stream(ActivityType.values()));
             this.<GoalType>fillCheckComboBox(fxGoalTypeCheckBox, Arrays.stream(GoalType.values()));
             this.<FilteringPriority>fillComboBox(fxPriorityComboBox, Arrays.stream(FilteringPriority.values()));
-            refreshLogs();
+            refreshTab();
         } catch (UIException e){
             JFXUtilities.showAlert(e.getTitle(), e.getErrorMessage(), Alert.AlertType.ERROR);
         }
@@ -69,7 +69,8 @@ public class ActivityLogTabController extends BaseJavaFXController implements In
 
     }
 
-    private void refreshLogs() {
+    @Override
+    public void refreshTab() {
         try {
             this.activityLogs = new LinkedList<>();
 

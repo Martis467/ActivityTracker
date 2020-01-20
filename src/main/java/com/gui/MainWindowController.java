@@ -1,8 +1,10 @@
 package com.gui;
 
+import com.gui.base.BaseJavaFXController;
 import com.gui.tabs.activity.ActivityTabController;
 import com.gui.tabs.activityLog.ActivityLogTabController;
 import com.gui.tabs.goal.GoalTabController;
+import com.gui.utilities.TabManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TabPane;
@@ -10,6 +12,7 @@ import javafx.scene.control.TextArea;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Vector;
 
 public class MainWindowController implements Initializable {
 
@@ -22,5 +25,12 @@ public class MainWindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         activityTabController.setConsole(fxConsoleTextArea);
+
+        Vector<BaseJavaFXController> controllers = new Vector<>();
+        controllers.add(activityTabController);
+        controllers.add(activityLogTabController);
+        controllers.add(goalTabController);
+
+        TabManager.setBaseControllers(controllers);
     }
 }

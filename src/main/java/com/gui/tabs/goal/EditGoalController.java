@@ -4,6 +4,7 @@ import com.enumerations.GoalType;
 import com.exception.UIException;
 import com.gui.base.BaseJavaFXController;
 import com.gui.utilities.ParsingService;
+import com.gui.utilities.TabManager;
 import com.gui.utilities.ValidationService;
 import com.models.Goal;
 import com.models.GoalActivityRelation;
@@ -40,18 +41,17 @@ public class EditGoalController extends BaseJavaFXController {
     private GoalRepository goalRepository;
     private GoalActivityRelationRepository goalActivityRelationRepository;
 
-    private GoalTabController mainController;
+    private BaseJavaFXController mainController;
     private int goalId;
 
     private List<GoalActivityRelation> goalActivityRelationList;
 
-    public void initData(GoalRepository goalRepository, GoalTabController goalTabController, int goalId){
+    public void initData(GoalRepository goalRepository, int goalId){
         this.goalRepository = goalRepository;
         this.setStage(fxRootPane);
-        this.mainController = goalTabController;
+        this.mainController = TabManager.getController(GoalTabController.class);
         this.goalId = goalId;
 
-        this.mainController = goalTabController;
 
         try {
             this.setDirectory("tabs/goal/");
@@ -75,7 +75,7 @@ public class EditGoalController extends BaseJavaFXController {
 
             handleGoalActivityRelationUpdate();
 
-            this.mainController.refreshGoals();
+            this.mainController.refreshTab();
             this.closeCurrentStage();
         } catch (UIException e) {
             JFXUtilities.showAlert(e.getTitle(), e.getErrorMessage(), Alert.AlertType.ERROR);
@@ -98,10 +98,12 @@ public class EditGoalController extends BaseJavaFXController {
             }
 
             // After deletion renew displayed activity list
-            this.mainController.refreshGoals();
+            this.mainController.refreshTab();
             this.closeCurrentStage();
         } catch (SQLException e) {
             JFXUtilities.showAlert("Delete failed", "Error deleting data from database, activity was not found", Alert.AlertType.ERROR);
+        } catch (UIException e) {
+            JFXUtilities.showAlert(e.getTitle(), e.getErrorMessage(), Alert.AlertType.ERROR);
         }
     }
 

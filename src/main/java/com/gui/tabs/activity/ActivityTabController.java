@@ -49,7 +49,7 @@ public class ActivityTabController extends BaseJavaFXController implements Initi
         try {
             this.setDirectory("tabs/activity/");
             this.repository = new ActivityRepository();
-            refreshActivities();
+            refreshTab();
         } catch (UIException e) {
             JFXUtilities.showAlert(e.getTitle(), e.getErrorMessage(), Alert.AlertType.ERROR);
         }
@@ -57,15 +57,16 @@ public class ActivityTabController extends BaseJavaFXController implements Initi
 
     public void openAddNewActivity(ActionEvent actionEvent) {
         AddNewActivityController controller = this.moveToStage(ADD_NEW_ACTIVITY_FXML, "New Activity", false);
-        controller.initData(this.repository, this);
+        controller.initData(this.repository);
     }
 
     private void openEditActivity(int activityId) {
         EditActivityController controller = this.moveToStage(EDIT_ACTIVITY_FXML, "Edit", false);
-        controller.initData(repository, activityId, this);
+        controller.initData(repository, activityId);
     }
 
-    public void refreshActivities(){
+    @Override
+    public void refreshTab(){
         try {
             List<Activity> activities = repository.getAll();
             activityButtons = new LinkedList<>();

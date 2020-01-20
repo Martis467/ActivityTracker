@@ -5,6 +5,7 @@ import com.gui.base.BaseJavaFXController;
 import com.enumerations.ActivityType;
 import com.exception.UIException;
 import com.gui.utilities.ParsingService;
+import com.gui.utilities.TabManager;
 import com.gui.utilities.ValidationService;
 import com.models.Activity;
 import com.models.GoalActivityRelation;
@@ -41,20 +42,19 @@ public class AddNewActivityController extends BaseJavaFXController {
     private ActivityRepository activityRepository;
     private GoalActivityRelationRepository goalActivityRelationRepository;
 
-    private ActivityTabController mainController;
+    private BaseJavaFXController mainController;
 
     private List<GoalActivityRelation> goalActivityRelationList;
 
     /**
      * Initialize data from parent controller
      * @param repository
-     * @param mainController
      */
-    public void initData(ActivityRepository repository, ActivityTabController mainController){
+    public void initData(ActivityRepository repository){
         this.activityRepository = repository;
         this.goalActivityRelationRepository = new GoalActivityRelationRepository();
 
-        this.mainController = mainController;
+        this.mainController = TabManager.getController(ActivityTabController.class);
 
         this.goalActivityRelationList = new LinkedList<>();
 
@@ -79,7 +79,7 @@ public class AddNewActivityController extends BaseJavaFXController {
 
             int id = this.activityRepository.<Activity>insert(model);
 
-            this.mainController.refreshActivities();
+            this.mainController.refreshTab();
 
             if(goalActivityRelationList.isEmpty()){
                 this.closeCurrentStage();

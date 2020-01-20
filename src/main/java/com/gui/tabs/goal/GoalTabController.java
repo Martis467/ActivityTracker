@@ -51,7 +51,7 @@ public class GoalTabController extends BaseJavaFXController implements Initializ
             this.goalActivityRelationRepository = new GoalActivityRelationRepository();
             this.fxGoalTitle.setWrappingWidth(this.fxGoalAnchorPane.getPrefWidth());
             this.fxGoalTitle.textAlignmentProperty().setValue(TextAlignment.LEFT);
-            refreshGoals();
+            refreshTab();
         } catch (UIException e) {
             e.printStackTrace();
         }
@@ -64,7 +64,7 @@ public class GoalTabController extends BaseJavaFXController implements Initializ
 
     public void openEditGoal(ActionEvent actionEvent) {
         EditGoalController controller = this.moveToStage(EDIT_GOAL, "Edit Goal", false);
-        controller.initData(goalRepository, this, goalTabView.getGoal().id);
+        controller.initData(goalRepository, goalTabView.getGoal().id);
     }
 
     public void nextGoal(ActionEvent actionEvent) {
@@ -77,7 +77,8 @@ public class GoalTabController extends BaseJavaFXController implements Initializ
         this.setGoalView(goalTabView.getGoal(), goalTabView.getGoalActivities());
     }
 
-    public void refreshGoals() {
+    @Override
+    public void refreshTab() {
         try {
             List<Goal> goals = this.goalRepository.getAll();
             List<GoalActivityRelation> goalActivities = this.goalActivityRelationRepository.getAllMapped();
