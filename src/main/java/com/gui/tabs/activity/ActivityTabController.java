@@ -2,6 +2,7 @@ package com.gui.tabs.activity;
 
 import com.exception.UIException;
 import com.gui.base.BaseJavaFXController;
+import com.gui.utilities.TabManager;
 import com.models.Activity;
 import com.repositories.ActivityRepository;
 import com.utilities.JFXUtilities;
@@ -34,7 +35,6 @@ public class ActivityTabController extends BaseJavaFXController implements Initi
     @FXML private CheckBox fxAmountTickBox;
     @FXML private BarChart fxBarChart;
 
-    private TextArea console;
     //endregion
 
     private final String ADD_NEW_ACTIVITY_FXML = "AddNewActivity";
@@ -101,13 +101,5 @@ public class ActivityTabController extends BaseJavaFXController implements Initi
             }
         });
         return button;
-    }
-
-    /**
-     * External initialization of variables
-     */
-    public void setConsole(TextArea console){
-        // TODO: add on change events to console from printing / logging
-        this.console = console;
     }
 }

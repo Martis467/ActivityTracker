@@ -131,9 +131,11 @@ public class BaseJavaFXController {
      * @param stream collection with values to fill
      * @param <T> type of object to fill in the combo box
      */
-    protected <T> void fillCheckComboBox(CheckComboBox<T> checkComboBox, Stream<T> stream) {
+    protected <T> void fillCheckComboBox(CheckComboBox<T> checkComboBox, Stream<T> stream, boolean checkAll) {
         ObservableList<T> items = FXCollections.observableArrayList(stream.collect(Collectors.toList()));
         checkComboBox.getItems().setAll(items);
+            if(checkAll)
+            checkComboBox.getCheckModel().checkAll();
     }
 
     /**

@@ -21,7 +21,7 @@ public class GoalTabView {
         this.goalActivityMap = new HashMap<>();
 
         goals.forEach(g -> {
-            List<Activity> activities = new LinkedList<>();
+            var activities = new LinkedList<Activity>();
             goalActivityRelations.stream()
                     .filter(ga -> ga.goalId == g.id)
                     .forEach(ga -> activities.add(ga.activity));

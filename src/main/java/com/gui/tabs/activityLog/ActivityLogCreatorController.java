@@ -2,10 +2,9 @@ package com.gui.tabs.activityLog;
 
 import com.exception.UIException;
 import com.gui.base.BaseJavaFXController;
-import com.models.ActivityLog;
 import com.repositories.ActivityLogRepository;
 import com.repositories.ActivityRepository;
-import com.strategies.TypeListManager;
+import com.strategies.creator.TypeListManager;
 import com.utilities.JFXUtilities;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

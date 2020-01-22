@@ -40,22 +40,22 @@ public class Goal {
     }
 
     public void validate() throws UIException {
-        if (completionWeight <= 0 )
+        if (this.completionWeight <= 0 )
             throw new UIException("Goal weight can only be positive", "Wrong fields");
 
-        if(completionWeight > 30000)
+        if(this.completionWeight > 30000)
             throw new UIException("Goal weight is too heavy, split it up", "Overkill");
 
-        if(completionWeight < 300)
+        if(this.completionWeight < 300)
             throw new UIException("Goal weight is too light, not worthy of being a goal", "Shame");
 
-        LocalDate expectedFinishDate = Instant.ofEpochMilli(expectedFinish).atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate expectedFinishDate = Extensions.getDate(this.expectedFinish);
         LocalDate now = LocalDate.now();
 
         // days * hours * minutes * seconds * milliseconds
-        long threeDayInterval = 3 * 24 * 60 * 60 * 1000;
+        var threeDayInterval = 3 * 24 * 60 * 60 * 1000;
 
-        if(!expectedFinishDate.isAfter(now) && id == 0)
+        if(!expectedFinishDate.isAfter(now) && this.id == 0)
             throw new UIException("Expected finish should be further at least 3 days from now", "Wrong fields");
 
         if(Extensions.getUnixTimeStamp(expectedFinishDate) - Extensions.getUnixTimeStamp(now) < threeDayInterval)
@@ -70,7 +70,7 @@ public class Goal {
         HashMap<String, String> fields = new HashMap<>();
 
         fields.put("Name", "\'" + this.name + "\'");
-        fields.put("CompletionWeight", String.valueOf(completionWeight));
+        fields.put("CompletionWeight", String.valueOf(this.completionWeight));
         fields.put("Description", "\'" + this.description + "\'");
         fields.put("CreatedAt", String.valueOf(this.createdAt));
         fields.put("ExpectedFinish", String.valueOf(this.expectedFinish));

@@ -1,5 +1,6 @@
 package com.repositories.base;
 
+import com.gui.utilities.Configuration;
 import jdk.jshell.spi.ExecutionControl;
 
 import java.sql.*;
@@ -13,7 +14,7 @@ public class BaseRepository extends AbstractBaseRepository {
     protected void openConnection() {
         try {
             Class.forName("org.sqlite.JDBC");
-            con = DriverManager.getConnection("jdbc:sqlite:database.db");
+            con = DriverManager.getConnection(Configuration.getConnectionString());
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }

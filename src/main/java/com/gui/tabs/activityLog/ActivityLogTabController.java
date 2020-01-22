@@ -7,6 +7,8 @@ import com.exception.UIException;
 import com.gui.base.BaseJavaFXController;
 import com.models.ActivityLog;
 import com.repositories.ActivityLogRepository;
+import com.repositories.GoalActivityRelationRepository;
+import com.strategies.randomizer.ActivityRandomizer;
 import com.utilities.JFXUtilities;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,6 +18,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.TextAlignment;
+import jdk.jshell.spi.ExecutionControl;
 import org.controlsfx.control.CheckComboBox;
 
 import java.net.URL;
@@ -41,17 +44,21 @@ public class ActivityLogTabController extends BaseJavaFXController implements In
 
     private final String ACTIVITY_LOG_VIEW = "ActivityLogView";
     private final String ACTIVITY_LOG_CREATOR = "ActivityLogCreator";
-    private ActivityLogRepository repository;
+    private final String RANDOM_ACTIVITY_LOG_VIEW = "RandomActivityLogView";
+    private ActivityLogRepository activityLogRepository;
+    private GoalActivityRelationRepository goalActivityRelationRepository;
     private List<Button> activityLogs;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try{
             this.setDirectory("tabs/activityLog/");
-            this.repository = new ActivityLogRepository();
-            this.<ActivityType>fillCheckComboBox(fxActivityTypeCheckBox, Arrays.stream(ActivityType.values()));
-            this.<GoalType>fillCheckComboBox(fxGoalTypeCheckBox, Arrays.stream(GoalType.values()));
+            this.activityLogRepository = new ActivityLogRepository();
+            this.goalActivityRelationRepository = new GoalActivityRelationRepository();
+            this.<ActivityType>fillCheckComboBox(fxActivityTypeCheckBox, Arrays.stream(ActivityType.values()), true);
+            this.<GoalType>fillCheckComboBox(fxGoalTypeCheckBox, Arrays.stream(GoalType.values()), true);
             this.<FilteringPriority>fillComboBox(fxPriorityComboBox, Arrays.stream(FilteringPriority.values()));
+            this.fxPriorityComboBox.getSelectionModel().selectFirst();
             refreshTab();
         } catch (UIException e){
             JFXUtilities.showAlert(e.getTitle(), e.getErrorMessage(), Alert.AlertType.ERROR);
@@ -59,6 +66,26 @@ public class ActivityLogTabController extends BaseJavaFXController implements In
     }
 
     public void randomise(ActionEvent actionEvent) {
+        try {
+            ActivityRandomizer activityRandomizer = new ActivityRandomizer(
+                    Integer.parseInt(this.fxTimeTextField.getText()),
+                    this.fxActivityTypeCheckBox.getCheckModel().getCheckedItems(),
+                    this.fxGoalTypeCheckBox.getCheckModel().getCheckedItems(),
+                    this.fxPriorityComboBox.getValue(),
+                    this.fxOverFlowCheckBox.isSelected(),
+                    this.goalActivityRelationRepository.getAllMapped()
+                    );
+            var activities = activityRandomizer.getRandomActivities();
+            System.out.println("lol");
+        }catch (NumberFormatException e){
+            JFXUtilities.showAlert("Total time invalid", "The total time value entered must be an intger.",
+                    Alert.AlertType.ERROR);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ExecutionControl.NotImplementedException e) {
+            JFXUtilities.showAlert("Not supported method", "The selected priority method has not been implemented," +
+                    "please choose a different one", Alert.AlertType.ERROR);
+        }
     }
 
     public void create(ActionEvent actionEvent) {
@@ -76,7 +103,7 @@ public class ActivityLogTabController extends BaseJavaFXController implements In
 
             List<Button> completedActivities = new LinkedList<>();
             List<Button> inProgressActivities = new LinkedList<>();
-            List<ActivityLog> activityLogs = this.repository.getAllMapped();
+            List<ActivityLog> activityLogs = this.activityLogRepository.getAllMapped();
 
             if (activityLogs == null || activityLogs.isEmpty())
                 return;
@@ -99,7 +126,7 @@ public class ActivityLogTabController extends BaseJavaFXController implements In
 
     private void openLogView(ActivityLog log){
         ActivityLogViewController controller = this.moveToStage(ACTIVITY_LOG_VIEW, "Log", false);
-        controller.initData(log, repository);
+        controller.initData(log, activityLogRepository);
     }
 
     private Button createButton(ActivityLog log, boolean completed) {

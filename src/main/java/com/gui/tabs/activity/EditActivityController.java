@@ -134,7 +134,7 @@ public class EditActivityController extends BaseJavaFXController {
         this.goalActivityRelationList = this.goalActivityRelationRepository.getByActivityId(this.activityId);
 
         this.<ActivityType>fillComboBox(fxTypeComboBox, Arrays.stream(ActivityType.values()));
-        this.<ActivityDuration>fillCheckComboBox(fxDurationCheckComboBox, ActivityDuration.getValues());
+        this.<ActivityDuration>fillCheckComboBox(fxDurationCheckComboBox, ActivityDuration.getValues(), false);
 
         this.fxNameTextField.setText(activity.name);
         this.fxDescriptionTextField.setText(activity.description);

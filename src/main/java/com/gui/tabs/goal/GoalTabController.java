@@ -33,6 +33,8 @@ public class GoalTabController extends BaseJavaFXController implements Initializ
     @FXML private VBox fxActivityViewVBox;
     @FXML private AnchorPane fxGoalAnchorPane;
     @FXML private LineChart fxGoalLineChart;
+    @FXML private Button fxCompleteGoalButton;
+
 
     //endregion
 
@@ -51,6 +53,7 @@ public class GoalTabController extends BaseJavaFXController implements Initializ
             this.goalActivityRelationRepository = new GoalActivityRelationRepository();
             this.fxGoalTitle.setWrappingWidth(this.fxGoalAnchorPane.getPrefWidth());
             this.fxGoalTitle.textAlignmentProperty().setValue(TextAlignment.LEFT);
+            this.fxCompleteGoalButton.setVisible(false);
             refreshTab();
         } catch (UIException e) {
             e.printStackTrace();
@@ -77,13 +80,18 @@ public class GoalTabController extends BaseJavaFXController implements Initializ
         this.setGoalView(goalTabView.getGoal(), goalTabView.getGoalActivities());
     }
 
+    public void completeGoal(ActionEvent actionEvent) {
+
+    }
+
     @Override
     public void refreshTab() {
         try {
-            List<Goal> goals = this.goalRepository.getAll();
-            List<GoalActivityRelation> goalActivities = this.goalActivityRelationRepository.getAllMapped();
+            var goals = this.goalRepository.getAll();
+            var goalActivities = this.goalActivityRelationRepository.getAllMapped();
+
             this.goalTabView = new GoalTabView(goals, goalActivities);
-            this.setGoalView(goalTabView.getGoal(), goalTabView.getGoalActivities());
+            this.setGoalView(this.goalTabView.getGoal(), this.goalTabView.getGoalActivities());
 
         } catch (SQLException e) {
             JFXUtilities.showAlert("Database error", "Failed to retrieve data from the database", Alert.AlertType.ERROR);
@@ -96,13 +104,13 @@ public class GoalTabController extends BaseJavaFXController implements Initializ
         this.fxGoalTitle.setText(goal.name);
 
         goalActivities.forEach(a -> {
-            Button button = createButton(a);
+            var button = createButton(a);
             this.fxActivityViewVBox.getChildren().add(button);
         });
     }
 
     private Button createButton(Activity activity) {
-        Button button = new Button(activity.getLongText());
+        var button = new Button(activity.getLongText());
         button.setPrefWidth(this.fxActivityViewVBox.getPrefWidth());
         button.setPrefHeight(150.0);
         button.setMinHeight(150.0);

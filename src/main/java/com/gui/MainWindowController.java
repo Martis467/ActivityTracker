@@ -24,13 +24,10 @@ public class MainWindowController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        activityTabController.setConsole(fxConsoleTextArea);
-
         Vector<BaseJavaFXController> controllers = new Vector<>();
-        controllers.add(activityTabController);
-        controllers.add(activityLogTabController);
-        controllers.add(goalTabController);
-
-        TabManager.setBaseControllers(controllers);
+        TabManager.setBaseControllers(controllers, this.fxConsoleTextArea);
+        controllers.add(this.activityTabController);
+        controllers.add(this.activityLogTabController);
+        controllers.add(this.goalTabController);
     }
 }

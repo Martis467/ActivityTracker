@@ -65,7 +65,7 @@ public class AddNewActivityController extends BaseJavaFXController {
         }
 
         this.<ActivityType>fillComboBox(fxTypeComboBox, Arrays.stream(ActivityType.values()));
-        this.<ActivityDuration>fillCheckComboBox(fxDurationCheckComboBox, ActivityDuration.getValues());
+        this.<ActivityDuration>fillCheckComboBox(fxDurationCheckComboBox, ActivityDuration.getValues(), false);
         this.setStage(fxRootPane);
     }
 

@@ -88,7 +88,7 @@
             <HBox fx:id="fxCompletedVBox" prefHeight="291.0" prefWidth="610.0" />
          </content>
       </ScrollPane>
-      <Text layoutX="644.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Overflow">
+      <Text layoutX="644.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Overtime">
          <font>
             <Font size="14.0" />
          </font>

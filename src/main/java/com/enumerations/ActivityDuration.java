@@ -17,12 +17,12 @@ public enum ActivityDuration {
     // 20 min interval
     twentyMinutes("20min", 20),
     fortyMinutes("40min", 40),
+    sixtyMinutes("60min", 60),
     eightyMinutes("80min", 80),
     hundredMinutes("100min", 100),
 
     // Extra intervals
     twentyFiveMinutes("25min", 25),
-    sixtyMinutes("60min", 60),
     hundredTwentyMinutes("120min", 120);
 
     private final String displayName;
@@ -50,7 +50,7 @@ public enum ActivityDuration {
      * @return Enum flags
      */
     public static EnumSet<ActivityDuration> getFlags(int statusValue) {
-        EnumSet flags = EnumSet.noneOf(ActivityDuration.class);
+        var flags = EnumSet.noneOf(ActivityDuration.class);
         Arrays.stream(ActivityDuration.values()).forEach(flag -> {
                     int flagValue = (1 << flag.ordinal());
                     if ((flagValue & statusValue) == flagValue)
@@ -67,9 +67,9 @@ public enum ActivityDuration {
      * @return integer code representing EnumSet
      */
     public static int getStatusValue(EnumSet<ActivityDuration> flags) {
-        Hack hack = new Hack();
+        var hack = new Hack();
         hack.hackInt = 0;
-        flags.forEach(falg -> hack.hackInt |= (1 << falg.ordinal()));
+        flags.forEach(flag -> hack.hackInt |= (1 << flag.ordinal()));
         return hack.hackInt;
     }
 

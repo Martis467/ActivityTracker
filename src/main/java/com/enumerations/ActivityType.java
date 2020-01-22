@@ -7,7 +7,7 @@ public enum ActivityType {
     Read(1, "Reading"),
     Program(2, "Programming"),
     Game(3, "Playing video games"),
-    Music(4, "Playing musical instrument"),
+    Music(4, "Playing music"),
     Educate(5, "Educating");
 
     private final int id;

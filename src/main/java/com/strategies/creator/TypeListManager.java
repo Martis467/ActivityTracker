@@ -1,4 +1,4 @@
-package com.strategies;
+package com.strategies.creator;
 
 import com.enumerations.ActivityDuration;
 import com.enumerations.ActivityType;
@@ -44,13 +44,25 @@ public class TypeListManager {
         this.selected = new LinkedList<>();
     }
 
+    /**
+     * Creates activity log objects from selected activities or throws a UI error if no activities are present in the
+     * selected column
+     * @return
+     * @throws UIException
+     */
     public List<ActivityLog> getLogs() throws UIException {
-        if (selected.isEmpty())
+        if (this.selected.isEmpty())
             throw new UIException("No activity logs have been selected, because the selected list is empty", "Unable to create");
 
         return selected.stream().map(b -> (ActivityLog)b.getUserData()).collect(Collectors.toList());
     }
 
+    /**
+     * Create activity log buttons from activities
+     * @param activityList
+     * @param type
+     * @return
+     */
     private List<Button> parseActivities(List<Activity> activityList, ActivityType type){
         var buttons = new LinkedList<Button>();
          activityList.stream().filter(a -> a.type == type).forEach(a -> buttons.addAll(makeButtons(a)));
@@ -69,7 +81,7 @@ public class TypeListManager {
 
         activity.expectedDurations.forEach(ed -> {
             var button = new Button(activity.name + " - " + ed.getDuration() + " min.");
-            var activityLog = createLog(activity, ed);
+            var activityLog = new ActivityLog(activity, ed);
 
             button.setPrefWidth(this.width);
             button.setMinWidth(this.width);
@@ -86,17 +98,12 @@ public class TypeListManager {
         return buttons;
     }
 
-    private ActivityLog createLog(Activity activity, ActivityDuration duration){
-        return new ActivityLog(
-                0,
-                duration.getDuration(),
-                0,
-                Extensions.getNowInUnixTime(),
-                0,
-                activity.id,
-                activity);
-    }
-
+    /**
+     * Creates an on-click event for activity buttons, for when they are clicked they should be
+     * moved to selected OR
+     * moved back to their category.
+     * @param button
+     */
     private void addButtonOnClickEvent(Button button){
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -112,6 +119,11 @@ public class TypeListManager {
         });
     }
 
+    /**
+     * Manages the on-click event for activity button in the create activity log window
+     * @param button
+     * @param add
+     */
     private void editTypeList(Button button, boolean add){
         var activity = (ActivityLog)button.getUserData();
 

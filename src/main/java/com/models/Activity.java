@@ -44,8 +44,7 @@ public class Activity {
     public String getLongText(){
         return name + " (" + type + ")" + System.lineSeparator()
                 + description + System.lineSeparator()
-                + Extensions.getDate(createdAt) + System.lineSeparator()
-                + "Total time spent: 0";
+                + Extensions.getDate(createdAt) + System.lineSeparator();
     }
     /**
      * Construct a dictionary consisting of {fieldName : fieldValue}

@@ -1,6 +1,8 @@
 package com.models;
 
+import com.enumerations.ActivityDuration;
 import com.enumerations.ActivityRating;
+import com.utilities.Extensions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +34,16 @@ public class ActivityLog {
         this.createdAt = createdAt;
         this.completedAt = completedAt;
         this.activityId = activityId;
+        this.activity = activity;
+    }
+
+    public ActivityLog(Activity activity, ActivityDuration ed) {
+        this.id = 0;
+        this.duration = ed.getDuration();
+        this.rating = ActivityRating.Unknown;
+        this.createdAt = Extensions.getNowInUnixTime();
+        this.completedAt = 0;
+        this.activityId = activity.id;
         this.activity = activity;
     }
 
