@@ -4,8 +4,7 @@ Activity tracker is a simple application to set up what activities that one migh
 
 ## Project purpose
 
-I'd like to deepen knowledge in javaFX, so I've decided to do something useful
-
+I'd like to deepen my knowledge in javaFX, so I've decided create a UI application for tracking your own time
 ## Model Structure
 ### Activity
 | Field | Type | Explanation |
